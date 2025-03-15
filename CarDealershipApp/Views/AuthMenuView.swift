@@ -30,35 +30,14 @@ struct AuthMenuView: View {
                 .font(.system(size: 25, weight: .regular, design: .default))
                 
             
-            Button{
-                //sign up function
-            } label: {
-                RoundedRectangle(cornerRadius: 15)
-                    .foregroundColor(.black)
-                    .frame(width: 300, height: 70)
-                    .overlay(
-                        HStack (alignment: .center){
-                            Text("Sign Up")
-                                .font(.title)
-                                .foregroundColor(.white)
-                        }.padding()
-                    )
-            }.padding(.bottom, 50)
+            CustomButton(title: "Sign Up", action: {
+                //signup func
+            })
+            .padding(.bottom, 50)
             
-            Button{
-                //sign up function
-            } label: {
-                RoundedRectangle(cornerRadius: 15)
-                    .foregroundColor(.black)
-                    .frame(width: 300, height: 70)
-                    .overlay(
-                        HStack (alignment: .center){
-                            Text("Login")
-                                .font(.title)
-                                .foregroundColor(.white)
-                        }.padding()
-                    )
-            }
+            CustomButton(title: "Login", action: {
+                //login func
+            })
             Spacer()
         }
         
