@@ -13,10 +13,10 @@ struct RoundedTextFieldStyle: ViewModifier {
                 .padding()
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(10)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .stroke(Color.gray, lineWidth: 1)
-//                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.gray, lineWidth: 1)
+                )
                 .padding(.horizontal, 20)
         }
 }
