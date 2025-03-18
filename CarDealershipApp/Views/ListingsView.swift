@@ -7,16 +7,7 @@
 
 import SwiftUI
 
-struct Car: Identifiable {
-    let id = UUID()
-    let imageURL: String
-    let model: String
-    let manufacturer: String
-    let price: String
-    let year: String
-    let engineType: String
-    let condition: String
-}
+
 
 class CarViewModel: ObservableObject {
     @Published var cars: [Car] = []

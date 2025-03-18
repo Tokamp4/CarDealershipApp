@@ -61,32 +61,32 @@ struct ListCarView: View {
 
                 Spacer()
 
-                HStack {
-                    Spacer()
-                    NavigationLink(destination: Text("Listings")) {
-                        Image(systemName: "cart")
-                            .font(.title)
-                    }
-                    Spacer()
-                    NavigationLink(destination: Text("Program")) {
-                        Image(systemName: "star")
-                            .font(.title)
-                    }
-                    Spacer()
-                    NavigationLink(destination: Text("Chats")) {
-                        Image(systemName: "message")
-                            .font(.title)
-                    }
-                    Spacer()
-                    NavigationLink(destination: Text("Profile")) {
-                        Image(systemName: "person")
-                            .font(.title)
-                    }
-                    Spacer()
-                }
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(15)
+//                HStack {
+//                    Spacer()
+//                    NavigationLink(destination: Text("Listings")) {
+//                        Image(systemName: "cart")
+//                            .font(.title)
+//                    }
+//                    Spacer()
+//                    NavigationLink(destination: Text("Program")) {
+//                        Image(systemName: "star")
+//                            .font(.title)
+//                    }
+//                    Spacer()
+//                    NavigationLink(destination: Text("Chats")) {
+//                        Image(systemName: "message")
+//                            .font(.title)
+//                    }
+//                    Spacer()
+//                    NavigationLink(destination: Text("Profile")) {
+//                        Image(systemName: "person")
+//                            .font(.title)
+//                    }
+//                    Spacer()
+//                }
+//                .padding()
+//                .background(Color(.systemGray6))
+//                .cornerRadius(15)
             }
             .padding()
         }
