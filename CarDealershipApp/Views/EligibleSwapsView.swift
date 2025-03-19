@@ -2,14 +2,8 @@ import SwiftUI
 
 struct EligibleSwapsView: View {
     let items: [Car] = [
-        Car(make: "2025 Audi A6", type: "Sedan, Wagon", imageName: "audi_a6"),
-        Car(make: "2025 Audi A6", type: "Sedan, Wagon", imageName: "audi_a6"),
-        Car(make: "2025 Audi A6", type: "Sedan, Wagon", imageName: "audi_a6"),
-        Car(make: "2025 Audi A6", type: "Sedan, Wagon", imageName: "audi_a6"),
-        Car(make: "2025 Audi A6", type: "Sedan, Wagon", imageName: "audi_a6"),
-        Car(make: "2025 Audi A6", type: "Sedan, Wagon", imageName: "audi_a6"),
-        Car(make: "2025 Audi A6", type: "Sedan, Wagon", imageName: "audi_a6"),
-        Car(make: "2025 Audi A6", type: "Sedan, Wagon", imageName: "audi_a6")
+        Car(imageURL: "audi_a6", model: "A6", manufacturer: "Audi", price: "$50,000", year: "2025", engineType: "Hybrid", condition: "New"),
+        Car(imageURL: "audi_a6", model: "A6", manufacturer: "Audi", price: "$50,000", year: "2025", engineType: "Hybrid", condition: "New")
     ]
 
     var body: some View {
@@ -21,16 +15,16 @@ struct EligibleSwapsView: View {
 
                 List(items) { car in
                     HStack {
-                        Image("subaru") // Ensure you have an image named "audi_a6"
+                        Image(car.imageURL)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 100, height: 75)
                             .cornerRadius(10)
 
                         VStack(alignment: .leading) {
-                            Text(car.make)
+                            Text("\(car.manufacturer) \(car.model)")
                                 .font(.headline)
-                            Text(car.type)
+                            Text(car.condition)
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
@@ -40,13 +34,6 @@ struct EligibleSwapsView: View {
             }
         }
     }
-}
-
-struct Car: Identifiable {
-    let id = UUID()
-    let make: String
-    let type: String
-    let imageName: String
 }
 
 struct EligibleSwapsView_Previews: PreviewProvider {
