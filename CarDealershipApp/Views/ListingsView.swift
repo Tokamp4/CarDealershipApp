@@ -9,42 +9,42 @@ import SwiftUI
 
 
 
-//class CarViewModel: ObservableObject {
-//    @Published var cars: [Car] = []
-//    
-//    init() {
-//        fetchCars()
-//    }
-//    
-//    func fetchCars() {
-//        self.cars = [
-//            Car(imageURL: "car1", model: "Corollla", manufacturer: "Toyota", price: "$55,000", year: "2022", engineType: "Hybird", condition: "New"),
-//            Car(imageURL: "car1", model: "Mustang", manufacturer: "Ford", price: "$45,000", year: "2021", engineType: "V8", condition: "Used")
-//        ]
-//    }
-//}
+class CarViewModel: ObservableObject {
+    @Published var cars: [Car] = []
+    
+    init() {
+        fetchCars()
+    }
+    
+    func fetchCars() {
+        self.cars = [
+            Car(imageURL: "car1", model: "Corollla", manufacturer: "Toyota", price: "$55,000", year: "2022", engineType: "Hybird", condition: "New"),
+            Car(imageURL: "car1", model: "Mustang", manufacturer: "Ford", price: "$45,000", year: "2021", engineType: "V8", condition: "Used")
+        ]
+    }
+}
 
 struct ListingsView: View {
     
-    let cars = [
-        Car(imageURL: "car1", model: "Corolla", manufacturer: "Toyota", price: "$55,000", year: "2022", engineType: "Hybird", condition: "New"),
-        Car(imageURL: "car1", model: "Mustang", manufacturer: "Ford", price: "$45,000", year: "2021", engineType: "V8", condition: "Used")
-    ]
+//    let cars = [
+//        Car(imageURL: "car1", model: "Corolla", manufacturer: "Toyota", price: "$55,000", year: "2022", engineType: "Hybird", condition: "New"),
+//        Car(imageURL: "car1", model: "Mustang", manufacturer: "Ford", price: "$45,000", year: "2021", engineType: "V8", condition: "Used")
+//    ]
     
-    //@StateObject private var viewModel = CarViewModel()
+    @StateObject private var viewModel = CarViewModel()
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         NavigationView {
             VStack {
-                HStack(spacing: 30){
+                HStack(spacing: 15){
                     Button{
                         
                     } label: {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.blue)
-                            .frame(width: 150, height: 30)
+                            .frame(width: 170, height: 30)
                             .overlay(
                                 HStack{
                                     Image(systemName: "tag.fill")
@@ -61,7 +61,7 @@ struct ListingsView: View {
                     } label: {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.blue)
-                            .frame(width: 150, height: 30)
+                            .frame(width: 170, height: 30)
                             .overlay(
                                 HStack{
                                     Image(systemName: "magnifyingglass")
@@ -76,12 +76,14 @@ struct ListingsView: View {
                 }
                 ScrollView{
                     LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(cars) { car in
+                        ForEach(viewModel.cars) { car in
                             NavigationLink(destination: CarDetailsView(car: car)) {
                                 VStack{
-                                    Image("car1")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
+                                    AsyncImage(url: URL(string: car.imageURL)) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
                                         .frame(width: 180, height: 140)
                                         
                                     HStack{
