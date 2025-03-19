@@ -22,7 +22,7 @@ struct CarDetailsView: View {
                 
                 ProgressView()
             }
-            
+             
             .scaledToFit()
             .frame(height: 250)
             .cornerRadius(10)
