@@ -38,8 +38,8 @@ struct ChatsView: View {
                     )
                     .padding(.top)
                 ScrollView{
-                    ForEach(messages, id: \.id){msg in
-                        NavigationLink(destination: ConversationView()){
+                    ForEach(messages){msg in
+                        NavigationLink(destination: ConversationView(currentUser: msg.username)){
                             MessageCardView(message: msg)
                                 .padding(.bottom)
                         }
