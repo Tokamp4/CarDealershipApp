@@ -31,9 +31,9 @@ struct ProfileView: View {
                     
                     //profile info
                     VStack {
-                        Image(systemName: "profileImage")
+                        Image(systemName: "person.circle.fill")
                             .resizable()
-                            .frame(width: 80, height: 80)
+                            .frame(width: 100, height: 100)
                             .foregroundColor(.gray)
                             .overlay(Image(systemName: "profileImage").offset(x: 15, y: -15))
                         
@@ -42,10 +42,11 @@ struct ProfileView: View {
                             .fontWeight(.bold)
                         
                         Text("Adril")
-                            .font(.subheadline)
+                            .font(.title2)
                             .foregroundColor(.gray)
                     }
                     .padding(.top, 10)
+                    Spacer()
                     
                     //about section
                     VStack(alignment: .leading, spacing: 5) {
@@ -57,7 +58,7 @@ struct ProfileView: View {
                             .font(.body)
                             .foregroundColor(.gray)
                     }
-                    .padding()
+                    .padding(.all)
                     
                     //"your" cars section
                     HStack {
@@ -79,13 +80,22 @@ struct ProfileView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
                             ForEach(carImages, id: \..self) { image in
-                                Image(image)
-                                    .resizable()
-                                    .frame(width: 120, height: 80)
-                                    .cornerRadius(10)
+                                ZStack(alignment: .topTrailing){
+                                    Image(image)
+                                        .resizable()
+                                        .frame(width: 180, height: 100)
+                                        .cornerRadius(10)
+                                    Button(action: {
+                                        //we make the checkmark a toggle so we can switch from it being an x or a checkmark
+                                    }) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.green)
+                                        .padding(5)
+                                }
+                                }
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.all)
                     }
                     
                     // recently view listings
@@ -110,7 +120,7 @@ struct ProfileView: View {
                             ForEach(carImages, id: \..self) { image in
                                 Image(image)
                                     .resizable()
-                                    .frame(width: 120, height: 80)
+                                    .frame(width: 180, height: 100)
                                     .cornerRadius(10)
                             }
                         }
