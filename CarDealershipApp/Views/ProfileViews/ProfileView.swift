@@ -7,50 +7,145 @@
 
 import SwiftUI
 
-class ProfileViewModel: ObservableObject {
-    @Published var userName: String = "Adril"
-    @Published var reservations: [String] = ["Toyota Corolla - Test Drive", "Ford Mustang - Test Drive"]
-    
-    func signOut() {
-        print("User signed out")
-    }
-}
-
 struct ProfileView: View {
-    @StateObject private var viewModel = ProfileViewModel()
+    let carImages = ["car1", "car1", "car1"]
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Welcome, \(viewModel.userName)")
-                    .font(.title)
-                    .fontWeight(.bold)
+        VStack {
+            ScrollView {
+                VStack {
+                    
+                    HStack {
+                        Button(action: {
+                            
+                        }) {
+                            Image(systemName: "arrow.left")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.black)
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 10)
+                    
+                    //profile info
+                    VStack {
+                        Image(systemName: "profileImage")
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .foregroundColor(.gray)
+                            .overlay(Image(systemName: "profileImage").offset(x: 15, y: -15))
+                        
+                        Text("Main Account")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        
+                        Text("Adril")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.top, 10)
+                    
+                    //about section
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("About")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                        
+                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+                            .font(.body)
+                            .foregroundColor(.gray)
+                    }
                     .padding()
-                
-                List(viewModel.reservations, id: \.self) { reservation in
-                    Text(reservation)
+                    
+                    //"your" cars section
+                    HStack {
+                        Text("Your Car’s")
+                            .font(.headline)
+                        Spacer()
+                        Button(action: {}) {
+                            HStack {
+                                Text("Filter")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                Image(systemName: "line.horizontal.3.decrease.circle")
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(carImages, id: \..self) { image in
+                                Image(image)
+                                    .resizable()
+                                    .frame(width: 120, height: 80)
+                                    .cornerRadius(10)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    
+                    // recently view listings
+                    HStack {
+                        Text("Recently Viewed Listings")
+                            .font(.headline)
+                        Spacer()
+                        Button(action: {}) {
+                            HStack {
+                                Text("Filter")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                Image(systemName: "line.horizontal.3.decrease.circle")
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(carImages, id: \..self) { image in
+                                Image(image)
+                                    .resizable()
+                                    .frame(width: 120, height: 80)
+                                    .cornerRadius(10)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
                 }
-                .frame(height: 200)
-                .cornerRadius(10)
-                .shadow(radius: 5)
-                
-                Button(action: {
-                    viewModel.signOut()
-                }) {
-                    Text("Sign Out")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
+            }
+            
+            //bottom nav page
+            HStack {
+                Spacer()
+                VStack {
+                    Image(systemName: "cart")
+                    Text("Listings")
                 }
-                .padding()
-                
+                Spacer()
+                VStack {
+                    Image(systemName: "star")
+                    Text("Program")
+                }
+                Spacer()
+                VStack {
+                    Image(systemName: "bubble.left")
+                    Text("Chats")
+                }
+                Spacer()
+                VStack {
+                    Image(systemName: "person")
+                    Text("Profile")
+                }
                 Spacer()
             }
-            .navigationTitle("Profile")
+            .padding()
+            .background(Color(UIColor.systemGray6))
+            .cornerRadius(20)
         }
     }
 }
