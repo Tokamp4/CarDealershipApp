@@ -48,10 +48,7 @@ struct SignUpView: View {
                 .modifier(RoundedTextFieldStyle())
                 .padding()
             Spacer()
-            CustomButton(title: "Create Account", action: {
-                //create account func
-            })
-            
+            CustomButton(title: "Create Account", action: {})
             Spacer()
         }
         

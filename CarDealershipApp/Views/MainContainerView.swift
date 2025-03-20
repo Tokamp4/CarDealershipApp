@@ -9,7 +9,24 @@ import SwiftUI
 
 struct MainContainerView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+            ListingsView()
+                .tabItem {
+                    Label("Listings", systemImage: "car.fill")
+                }
+            ExchangeView()
+                .tabItem {
+                    Label("Program", systemImage: "star.fill")
+                }
+            ContactsView()
+                .tabItem {
+                    Label("Messages", systemImage: "message.fill")
+                }
+            ProfileView()
+                .tabItem{
+                    Label("Profile", systemImage: "person.crop.circle.fill")
+                }
+        }
     }
 }
 

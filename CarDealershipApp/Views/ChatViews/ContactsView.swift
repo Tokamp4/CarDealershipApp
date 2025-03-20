@@ -19,7 +19,7 @@ let messages = [
         Message(username: "Allan", message: "Lorem ipsum dolor sit amet", time: "09:00")
     ]
 
-struct ChatsView: View {
+struct ContactsView: View {
     
     @State private var search: String = ""
     
@@ -51,5 +51,5 @@ struct ChatsView: View {
 }
 
 #Preview {
-    ChatsView()
+    ContactsView()
 }

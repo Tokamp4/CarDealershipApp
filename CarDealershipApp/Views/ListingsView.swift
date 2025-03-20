@@ -18,8 +18,15 @@ class CarViewModel: ObservableObject {
     
     func fetchCars() {
         self.cars = [
-            Car(imageURL: "car1", model: "Corollla", manufacturer: "Toyota", price: "$55,000", year: "2022", engineType: "Hybird", condition: "New"),
-            Car(imageURL: "car1", model: "Mustang", manufacturer: "Ford", price: "$45,000", year: "2021", engineType: "V8", condition: "Used")
+            Car(imageURL: "car2", model: "Civic", manufacturer: "Honda", price: "$30,000", year: "2023", engineType: "Hybrid", condition: "New"),
+            Car(imageURL: "car3", model: "Model 3", manufacturer: "Tesla", price: "$40,000", year: "2022", engineType: "Electric", condition: "New"),
+            Car(imageURL: "car4", model: "Camry", manufacturer: "Toyota", price: "$28,000", year: "2021", engineType: "Gasoline", condition: "Used"),
+            Car(imageURL: "car5", model: "Charger", manufacturer: "Dodge", price: "$50,000", year: "2020", engineType: "V8", condition: "Used"),
+            Car(imageURL: "car6", model: "Outback", manufacturer: "Subaru", price: "$35,000", year: "2023", engineType: "Gasoline", condition: "New"),
+            Car(imageURL: "car7", model: "CX-5", manufacturer: "Mazda", price: "$32,000", year: "2022", engineType: "Gasoline", condition: "New"),
+            Car(imageURL: "car8", model: "F-150", manufacturer: "Ford", price: "$60,000", year: "2023", engineType: "Hybrid", condition: "New"),
+            Car(imageURL: "car9", model: "Altima", manufacturer: "Nissan", price: "$27,000", year: "2021", engineType: "Gasoline", condition: "Used"),
+            Car(imageURL: "car10", model: "Rogue", manufacturer: "Nissan", price: "$29,000", year: "2022", engineType: "Hybrid", condition: "New")
         ]
     }
 }

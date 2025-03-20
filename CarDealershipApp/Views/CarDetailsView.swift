@@ -16,37 +16,40 @@ struct CarDetailsView: View {
     var body: some View {
         
         VStack {
-            AsyncImage(url: URL(string: car.imageURL)) { image in
-                image.resizable()
-            } placeholder: {
+//            AsyncImage(url: URL(string: car.imageURL)) { image in
+//                image.resizable()
+//            } placeholder: {
+//                
+//                ProgressView()
+//            }
+            ImageCarousel(images: ["car1", "car1", "car1"])
                 
-                ProgressView()
-            }
-             
-            .scaledToFit()
-            .frame(height: 250)
-            .cornerRadius(10)
-            .shadow(radius: 5)
-            .padding()
             
             Text("\(car.manufacturer) \(car.model)")
-                .font(.title)
+                .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.top, 10)
             
             Text("Price: \(car.price)")
                 .font(.headline)
                 .foregroundColor(.gray)
-            
-            HStack(spacing: 15) {
-                Text("Year: \(car.year)")
-                Text("Engine: \(car.engineType)")
-                Text("Condition: \(car.condition)")
+                
+            HStack{
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Description")
+                        .foregroundStyle(.black)
+                    Text("Year: \(car.year)")
+                    Text("Engine: \(car.engineType)")
+                    Text("Condition: \(car.condition)")
+                }
+                .font(.title3)
+                .foregroundColor(.secondary)
+                .padding(.leading,20)
+                
+                Spacer()
             }
-            
-            .font(.subheadline)
-            .foregroundColor(.secondary)
             .padding()
+            
             
             Spacer()
             
@@ -64,7 +67,6 @@ struct CarDetailsView: View {
             }
             .padding()
         }
-        .navigationTitle(" Car Details ")
     }
 }
 

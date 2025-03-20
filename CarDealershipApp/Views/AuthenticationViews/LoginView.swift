@@ -54,9 +54,22 @@ struct LoginView: View {
                     .underline()
             }
             .padding()
-            CustomButton(title: "Login", action: {
-                // Create account function
-            })
+//            CustomButton(title: "Login", action: {})
+            
+            //temporary button (navigation only)
+            NavigationLink(destination: MainContainerView()) {
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundColor(.black)
+                    .frame(width: 300, height: 70)
+                    .overlay(
+                        HStack (alignment: .center){
+                            Text("Login")
+                                .font(.title)
+                                .foregroundColor(.white)
+                        }.padding()
+                    )
+                .padding(.bottom, 50)
+            }
             Spacer()
         }
     }
