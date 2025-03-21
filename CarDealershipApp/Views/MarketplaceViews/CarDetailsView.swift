@@ -14,77 +14,79 @@ struct CarDetailsView: View {
     
     
     var body: some View {
-        VStack {
-    //            AsyncImage(url: URL(string: car.imageURL)) { image in
-    //                image.resizable()
-    //            } placeholder: {
-    //
-    //                ProgressView()
-    //            }
-            ImageCarousel(images: ["car1", "car1", "car1"])
+        ScrollView {
+            VStack {
+                //            AsyncImage(url: URL(string: car.imageURL)) { image in
+                //                image.resizable()
+                //            } placeholder: {
+                //
+                //                ProgressView()
+                //            }
+                ImageCarousel(images: ["car1", "car1", "car1"])
                 
-            
-            Text("\(car.manufacturer) \(car.model)")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.top, 10)
-            
-            Text("Price: \(car.price)")
-                .font(.headline)
-                .foregroundColor(.gray)
                 
-            HStack{
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Description:")
-                        .foregroundStyle(.black)
-                    Text("Year: \(car.year)")
-                    Text("Condition: \(car.condition)")
-                    Text("Car Type: ")
-                    Text("Engine: \(car.engineType)")
-                    Text("Acceleration: ")
-                    Text("Transmission: ")
-                    Text("Safety Features: ")
+                Text("\(car.manufacturer) \(car.model)")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 10)
+                
+                Text("Price: \(car.price)")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                
+                HStack{
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Description:")
+                            .foregroundStyle(.black)
+                        Text("Year: \(car.year)")
+                        Text("Condition: \(car.condition)")
+                        Text("Car Type: ")
+                        Text("Engine: \(car.engineType)")
+                        Text("Acceleration: ")
+                        Text("Transmission: ")
+                        Text("Safety Features: ")
+                    }
+                    .font(.title3)
+                    .foregroundColor(.secondary)
+                    .padding(.leading,20)
+                    
+                    Spacer()
                 }
-                .font(.title3)
-                .foregroundColor(.secondary)
-                .padding(.leading,20)
+                .padding()
+                VStack(alignment: .leading){
+                    Text("Seller ")
+                        .font(.system(size: 20))
+                    HStack(alignment: .center){
+                        Image("profileImage")
+                            .resizable()
+                            .edgesIgnoringSafeArea(.all)
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .frame(width: 60, height: 60)
+                        Text("John Doe")
+                            .font(.system(size: 20, weight: .semibold))
+                        NavigationLink(destination: ConversationView(currentUser: "user1")){
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.blue)
+                                .frame(width: 170, height: 30)
+                                .overlay(
+                                    HStack{
+                                        Image(systemName: "message")
+                                            .foregroundStyle(.white)
+                                        Text("Message")
+                                            .font(.headline)
+                                            .foregroundStyle(.white)
+                                    }
+                                    
+                                )
+                        }
+                        
+                    }
+                }
+                
                 
                 Spacer()
             }
-            .padding()
-            VStack(alignment: .leading){
-                Text("Seller ")
-                    .font(.system(size: 20))
-                HStack(alignment: .center){
-                    Image("profileImage")
-                        .resizable()
-                        .edgesIgnoringSafeArea(.all)
-                        .aspectRatio(contentMode: .fit)
-                        .clipShape(Circle())
-                        .frame(width: 60, height: 60)
-                    Text("John Doe")
-                        .font(.system(size: 20, weight: .semibold))
-                    NavigationLink(destination: ConversationView(currentUser: "user1")){
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.blue)
-                            .frame(width: 170, height: 30)
-                            .overlay(
-                                HStack{
-                                    Image(systemName: "message")
-                                        .foregroundStyle(.white)
-                                    Text("Message")
-                                        .font(.headline)
-                                        .foregroundStyle(.white)
-                                }
-                                
-                            )
-                    }
-                    
-                }
-            }
-            
-            
-            Spacer()
         }
     }
 }

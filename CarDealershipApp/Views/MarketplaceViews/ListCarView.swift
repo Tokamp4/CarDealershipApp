@@ -9,12 +9,11 @@ struct ListCarView: View {
     @State private var engineType: String = ""
 
     var body: some View {
-        NavigationView {
+        ScrollView{
             VStack(spacing: 10) {
-                    Text("New Vehicle Listing")
-                        .font(.title)
-                        .padding(.horizontal)
-
+                Text("New Vehicle Listing")
+                    .font(.title)
+                    .padding(.horizontal)
                 Button(action: {
                     // Add photos/videos action
                 }) {
@@ -36,7 +35,7 @@ struct ListCarView: View {
                     .cornerRadius(10)
                     .shadow(color: Color.gray.opacity(0.5), radius: 5, x: 0, y: 2)
                 }
-
+                
                 Group {
                     TextField("Model", text: $model)
                         .modifier(RoundedTextFieldStyle())
@@ -65,52 +64,38 @@ struct ListCarView: View {
                         .shadow(radius: 5)
                 }
                 .padding()
-
+                
                 Spacer()
-
-//                HStack {
-//                    Spacer()
-//                    NavigationLink(destination: Text("Listings")) {
-//                        Image(systemName: "cart")
-//                            .font(.title)
-//                    }
-//                    Spacer()
-//                    NavigationLink(destination: Text("Program")) {
-//                        Image(systemName: "star")
-//                            .font(.title)
-//                    }
-//                    Spacer()
-//                    NavigationLink(destination: Text("Chats")) {
-//                        Image(systemName: "message")
-//                            .font(.title)
-//                    }
-//                    Spacer()
-//                    NavigationLink(destination: Text("Profile")) {
-//                        Image(systemName: "person")
-//                            .font(.title)
-//                    }
-//                    Spacer()
-//                }
-//                .padding()
-//                .background(Color(.systemGray6))
-//                .cornerRadius(15)
+                
+                //                HStack {
+                //                    Spacer()
+                //                    NavigationLink(destination: Text("Listings")) {
+                //                        Image(systemName: "cart")
+                //                            .font(.title)
+                //                    }
+                //                    Spacer()
+                //                    NavigationLink(destination: Text("Program")) {
+                //                        Image(systemName: "star")
+                //                            .font(.title)
+                //                    }
+                //                    Spacer()
+                //                    NavigationLink(destination: Text("Chats")) {
+                //                        Image(systemName: "message")
+                //                            .font(.title)
+                //                    }
+                //                    Spacer()
+                //                    NavigationLink(destination: Text("Profile")) {
+                //                        Image(systemName: "person")
+                //                            .font(.title)
+                //                    }
+                //                    Spacer()
+                //                }
+                //                .padding()
+                //                .background(Color(.systemGray6))
+                //                .cornerRadius(15)
             }
             .padding()
         }
-    }
-}
-
-struct CustomTextField: View {
-    var placeholder: String
-    @Binding var text: String
-
-    var body: some View {
-        TextField(placeholder, text: $text)
-            .padding()
-            .background(Color.white)
-            .border(Color.gray, width: 2)
-            .cornerRadius(10)
-            .padding(.horizontal)
     }
 }
 
