@@ -53,7 +53,7 @@ struct CarDetailsView: View {
             }
             .padding()
             VStack(alignment: .leading){
-                Text("Seller Information:")
+                Text("Seller ")
                     .font(.system(size: 20))
                 HStack(alignment: .center){
                     Image("profileImage")
@@ -64,9 +64,7 @@ struct CarDetailsView: View {
                         .frame(width: 60, height: 60)
                     Text("John Doe")
                         .font(.system(size: 20, weight: .semibold))
-                    Button{
-                        
-                    } label: {
+                    NavigationLink(destination: ConversationView(currentUser: "user1")){
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.blue)
                             .frame(width: 170, height: 30)
@@ -81,22 +79,11 @@ struct CarDetailsView: View {
                                 
                             )
                     }
+                    
                 }
             }
             
-            Button(action: {
-                //nothing yet
-            }) {
-                Text("Buy Now")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-            }
-            .padding()
+            
             Spacer()
         }
     }

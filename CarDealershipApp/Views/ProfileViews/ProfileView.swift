@@ -14,21 +14,6 @@ struct ProfileView: View {
         VStack {
             ScrollView {
                 VStack {
-                    
-                    HStack {
-                        Button(action: {
-                            
-                        }) {
-                            Image(systemName: "arrow.left")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.black)
-                        }
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 10)
-                    
                     //profile info
                     VStack {
                         Image(systemName: "person.circle.fill")

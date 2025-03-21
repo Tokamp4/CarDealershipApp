@@ -46,9 +46,7 @@ struct ListingsView: View {
         NavigationView {
             VStack {
                 HStack(spacing: 15){
-                    Button{
-                        
-                    } label: {
+                    NavigationLink(destination: ListCarView()){
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.blue)
                             .frame(width: 170, height: 30)
@@ -63,6 +61,8 @@ struct ListingsView: View {
                                
                             )
                     }
+                    
+                
                     Button{
                         
                     } label: {

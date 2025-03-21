@@ -54,7 +54,7 @@ struct LoginView: View {
                     .underline()
             }
             .padding()
-//            CustomButton(title: "Login", action: {})
+//            CustomButton(title: "Login", action: {isLogged.toggle()})
             
             //temporary button (navigation only)
             NavigationLink(destination: MainContainerView()) {

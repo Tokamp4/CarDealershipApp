@@ -11,21 +11,9 @@ struct ListCarView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
-                HStack {
-                    Button(action: {
-                        // Action for back navigation
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.gray)
-                            .font(.title)
-                    }
-                    Spacer()
                     Text("New Vehicle Listing")
                         .font(.title)
                         .padding(.horizontal)
-                    Spacer()
-                }
-                .padding(.vertical)
 
                 Button(action: {
                     // Add photos/videos action
@@ -50,14 +38,33 @@ struct ListCarView: View {
                 }
 
                 Group {
-                    CustomTextField(placeholder: "Model", text: $model)
-                    CustomTextField(placeholder: "Manufacturer", text: $manufacturer)
-                    CustomTextField(placeholder: "Vehicle Type", text: $vehicleType)
-                    CustomTextField(placeholder: "Car Condition", text: $carCondition)
-                    CustomTextField(placeholder: "Year", text: $year)
-                    CustomTextField(placeholder: "Engine Type", text: $engineType)
+                    TextField("Model", text: $model)
+                        .modifier(RoundedTextFieldStyle())
+                    TextField("Manufacturer", text: $manufacturer)
+                        .modifier(RoundedTextFieldStyle())
+                    TextField("Vehicle Type",text: $vehicleType)
+                        .modifier(RoundedTextFieldStyle())
+                    TextField("Car Condition", text: $carCondition)
+                        .modifier(RoundedTextFieldStyle())
+                    TextField("Year",text:$year)
+                        .modifier(RoundedTextFieldStyle())
+                    TextField("Engine", text: $engineType)
+                        .modifier(RoundedTextFieldStyle())
                 }
-                .padding(.top, 10)
+                .padding(3)
+                Button(action: {
+                    //nothing yet
+                }) {
+                    Text("Post Vehicle")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .font(.headline)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                }
+                .padding()
 
                 Spacer()
 
