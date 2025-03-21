@@ -5,13 +5,7 @@ struct ExchangeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.gray)
-                        .font(.title)
-                        .padding(.leading)
-                    Spacer()
-                }
+                //removed back button image
 
                 Text("Car Exchange")
                     .font(.largeTitle)
