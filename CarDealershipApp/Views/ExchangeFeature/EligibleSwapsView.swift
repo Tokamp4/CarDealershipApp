@@ -13,13 +13,7 @@ struct EligibleSwapsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.gray)
-                        .font(.title)
-                        .padding(.leading)
-                    Spacer()
-                }
+                
                 
                 Text("Other Eligible Swaps")
                     .bold()
