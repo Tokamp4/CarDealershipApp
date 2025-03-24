@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A03B933F2D91A74200A5A8C0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A03B933E2D91A74200A5A8C0 /* FirebaseCore */; };
+		A03B93412D91A87900A5A8C0 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A03B93402D91A87900A5A8C0 /* FirebaseAuth */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		445F84222D806DF80067D963 /* CarDealershipApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarDealershipApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A03B933F2D91A74200A5A8C0 /* FirebaseCore in Frameworks */,
+				A03B93412D91A87900A5A8C0 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +40,7 @@
 			isa = PBXGroup;
 			children = (
 				445F84242D806DF80067D963 /* CarDealershipApp */,
+				A03B933D2D91A74200A5A8C0 /* Frameworks */,
 				445F84232D806DF80067D963 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +51,13 @@
 				445F84222D806DF80067D963 /* CarDealershipApp.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A03B933D2D91A74200A5A8C0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +80,8 @@
 			);
 			name = CarDealershipApp;
 			packageProductDependencies = (
+				A03B933E2D91A74200A5A8C0 /* FirebaseCore */,
+				A03B93402D91A87900A5A8C0 /* FirebaseAuth */,
 			);
 			productName = CarDealershipApp;
 			productReference = 445F84222D806DF80067D963 /* CarDealershipApp.app */;
@@ -94,6 +111,9 @@
 			);
 			mainGroup = 445F84192D806DF80067D963;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A03B933C2D91A71A00A5A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 445F84232D806DF80067D963 /* Products */;
 			projectDirPath = "";
@@ -252,7 +272,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarDealershipApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 77XQ27P7G6;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -281,7 +301,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarDealershipApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 77XQ27P7G6;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -324,6 +344,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A03B933C2D91A71A00A5A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A03B933E2D91A74200A5A8C0 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A03B933C2D91A71A00A5A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		A03B93402D91A87900A5A8C0 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A03B933C2D91A71A00A5A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 445F841A2D806DF80067D963 /* Project object */;
 }
