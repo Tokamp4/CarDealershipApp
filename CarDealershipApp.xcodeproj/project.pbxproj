@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A03B933F2D91A74200A5A8C0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A03B933E2D91A74200A5A8C0 /* FirebaseCore */; };
 		A03B93412D91A87900A5A8C0 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A03B93402D91A87900A5A8C0 /* FirebaseAuth */; };
+		A0566A972D9C41DD00DF77CA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A0566A962D9C41DD00DF77CA /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 			files = (
 				A03B933F2D91A74200A5A8C0 /* FirebaseCore in Frameworks */,
 				A03B93412D91A87900A5A8C0 /* FirebaseAuth in Frameworks */,
+				A0566A972D9C41DD00DF77CA /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +84,7 @@
 			packageProductDependencies = (
 				A03B933E2D91A74200A5A8C0 /* FirebaseCore */,
 				A03B93402D91A87900A5A8C0 /* FirebaseAuth */,
+				A0566A962D9C41DD00DF77CA /* FirebaseFirestore */,
 			);
 			productName = CarDealershipApp;
 			productReference = 445F84222D806DF80067D963 /* CarDealershipApp.app */;
@@ -366,6 +369,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A03B933C2D91A71A00A5A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		A0566A962D9C41DD00DF77CA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A03B933C2D91A71A00A5A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

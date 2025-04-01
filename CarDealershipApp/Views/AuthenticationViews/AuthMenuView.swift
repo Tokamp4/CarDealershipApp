@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AuthMenuView: View {
     var body: some View {
-        NavigationView{
             VStack{
                 ZStack{
                     Image("bgAuth")
@@ -61,7 +60,6 @@ struct AuthMenuView: View {
             }
             
         }
-    }
 }
 
 #Preview {

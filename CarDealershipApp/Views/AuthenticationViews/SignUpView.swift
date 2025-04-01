@@ -9,9 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @State private var username: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @EnvironmentObject var vm: AuthViewModel
     
     var body: some View {
         VStack{
@@ -38,23 +36,34 @@ struct SignUpView: View {
                     
             }.edgesIgnoringSafeArea(.top)
             Spacer()
-            TextField("User Name", text: $username)
+            TextField("Name", text: $vm.name)
                 .modifier(RoundedTextFieldStyle())
                 .padding()
-            TextField("Email", text: $email)
+            TextField("User Name", text: $vm.username)
                 .modifier(RoundedTextFieldStyle())
                 .padding()
-            TextField("Password", text: $password)
+            TextField("Email", text: $vm.email)
+                .modifier(RoundedTextFieldStyle())
+                .keyboardType(.emailAddress)
+                .autocapitalization(.none)
+                .padding()
+            SecureField("Password", text: $vm.password)
                 .modifier(RoundedTextFieldStyle())
                 .padding()
+            Text(vm.errorMessage)
+                .foregroundStyle(Color.red)
             Spacer()
-            CustomButton(title: "Create Account", action: {})
+            CustomButton(title: "Create Account", action: {
+                Task{
+                    vm.signUp()
+                }
+            })
             Spacer()
         }
-        
     }
 }
 
 #Preview {
     SignUpView()
+        .environmentObject(AuthViewModel())
 }

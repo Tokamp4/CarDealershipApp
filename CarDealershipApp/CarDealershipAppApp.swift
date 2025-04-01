@@ -8,24 +8,31 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseAuth
+import FirebaseFirestore
 
 // something to test
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-
-    return true
-  }
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        
+        return true
+    }
 }
 
 @main
 struct CarDealershipAppApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    @StateObject var vm = AuthViewModel()
+    
     var body: some Scene {
         WindowGroup {
+            
             ContentView()
+                .environmentObject(vm)
+            
         }
     }
 }

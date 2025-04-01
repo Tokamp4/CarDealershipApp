@@ -57,7 +57,7 @@ struct LoginView: View {
 //            CustomButton(title: "Login", action: {isLogged.toggle()})
             
             //temporary button (navigation only)
-            NavigationLink(destination: MainContainerView()) {
+            //NavigationLink(destination: MainContainerView()) {
                 RoundedRectangle(cornerRadius: 15)
                     .foregroundColor(.black)
                     .frame(width: 300, height: 70)
@@ -69,7 +69,7 @@ struct LoginView: View {
                         }.padding()
                     )
                 .padding(.bottom, 50)
-            }
+            //}
             Spacer()
         }
     }

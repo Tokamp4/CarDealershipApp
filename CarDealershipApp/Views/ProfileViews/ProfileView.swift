@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    @EnvironmentObject var vm: AuthViewModel
+    
     let carImages = ["car1", "car1", "car1"]
     
     var body: some View {
@@ -113,34 +116,15 @@ struct ProfileView: View {
                     }
                 }
             }
-            
-            //bottom nav page
-            HStack {
-                Spacer()
-                VStack {
-                    Image(systemName: "cart")
-                    Text("Listings")
+            CustomButton(title: "Log Out") {
+                do{
+                    try vm.signOut()
                 }
-                Spacer()
-                VStack {
-                    Image(systemName: "star")
-                    Text("Program")
+                catch{
+                    print(error.localizedDescription)
                 }
-                Spacer()
-                VStack {
-                    Image(systemName: "bubble.left")
-                    Text("Chats")
-                }
-                Spacer()
-                VStack {
-                    Image(systemName: "person")
-                    Text("Profile")
-                }
-                Spacer()
             }
-            .padding()
-            .background(Color(UIColor.systemGray6))
-            .cornerRadius(20)
+
         }
     }
 }
@@ -148,5 +132,6 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
+            .environmentObject(AuthViewModel())
     }
 }
