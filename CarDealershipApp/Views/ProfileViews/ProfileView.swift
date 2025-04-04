@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @EnvironmentObject var vm: SignUpViewModel
+    @StateObject private var vm = ProfileViewModel()
     
     let carImages = ["car1", "car1", "car1"]
     
@@ -116,13 +116,8 @@ struct ProfileView: View {
                     }
                 }
             }
-            CustomButton(title: "Log Out") {
-//                do{
-//                    //try vm.signOut()
-//                }
-//                catch{
-//                    print(error.localizedDescription)
-//                }
+            CustomButton(title: "Sign out") {
+                vm.signOut()
             }
 
         }

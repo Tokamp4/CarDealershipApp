@@ -21,6 +21,8 @@ let messages = [
 
 struct ContactsView: View {
     
+    @StateObject private var vm = ChatViewModel()
+    
     @State private var search: String = ""
     
     var body: some View {

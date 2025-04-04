@@ -54,8 +54,8 @@ final class AuthService {
     }
     
     
-    func signOut() throws {
-        try Auth.auth().signOut()
+    func signOut() {
+        try? Auth.auth().signOut()
         self.userSession = nil
         //UserService.shared.reset()
     }
