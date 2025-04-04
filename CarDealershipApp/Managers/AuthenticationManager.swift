@@ -12,7 +12,11 @@ import FirebaseFirestore
 final class AuthenticationManager {
     
     static let shared = AuthenticationManager()
-    private init() {}
+    @Published var userSession: FirebaseAuth.User?
+    
+    init() {
+        self.userSession = Auth.auth().currentUser
+    }
     
     func getAuthenticatedUser() async throws -> UserModel {
         guard let user = Auth.auth().currentUser else {

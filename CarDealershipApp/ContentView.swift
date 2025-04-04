@@ -9,26 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var vm: AuthViewModel
-    @State private var showAuthMenuView: Bool = false
+    @StateObject private var vm = ContentViewModel()
     
     var body: some View {
-        ZStack{
-            NavigationView{
+        Group{
+            if vm.userSession != nil {
                 MainContainerView()
-    
-            }
-        }
-        .onAppear {
-            Task {
-                await vm.fetchSignedUser()
-            }
-        }
-        .onChange(of: vm.user) { newValue in
-            showAuthMenuView = newValue == nil
-        }
-        .fullScreenCover(isPresented: $showAuthMenuView) {
-            NavigationView{
+            } else {
                 AuthMenuView()
             }
         }
@@ -37,5 +24,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(AuthViewModel())
 }

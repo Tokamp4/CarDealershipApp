@@ -24,15 +24,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct CarDealershipAppApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
-    @StateObject var vm = AuthViewModel()
-    
     var body: some Scene {
         WindowGroup {
-            
             ContentView()
-                .environmentObject(vm)
-            
         }
     }
 }
