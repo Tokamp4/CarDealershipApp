@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @EnvironmentObject var vm: AuthViewModel
+    @StateObject private var vm = SignUpViewModel()
     
     var body: some View {
         VStack{
@@ -55,7 +55,7 @@ struct SignUpView: View {
             Spacer()
             CustomButton(title: "Create Account", action: {
                 Task{
-                    vm.signUp()
+                    try await vm.signUp()
                 }
             })
             Spacer()
@@ -65,5 +65,5 @@ struct SignUpView: View {
 
 #Preview {
     SignUpView()
-        .environmentObject(AuthViewModel())
+        .environmentObject(SignUpViewModel())
 }

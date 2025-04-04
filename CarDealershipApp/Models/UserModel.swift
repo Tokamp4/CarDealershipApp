@@ -8,16 +8,15 @@
 import Foundation
 import FirebaseAuth
 
-struct UserModel: Codable, Equatable {
-    let uid: String
-    let name: String?
-    let username: String?
-    let email: String?
+struct UserModel: Identifiable,Hashable,Codable {
     
-    init(user: User, name: String?, username: String?){
-        self.uid = user.uid
-        self.name = name
-        self.username = username
-        self.email = user.email ?? "No email"
-    }
+    let id: String
+    var name: String
+    var username: String
+    var email: String
+    //var profileImageName: String?
+    var isCurrentUser: Bool {
+            guard let currentUid = Auth.auth().currentUser?.uid else { return false }
+            return id == currentUid
+        }
 }

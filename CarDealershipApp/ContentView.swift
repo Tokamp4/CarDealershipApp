@@ -16,7 +16,10 @@ struct ContentView: View {
             if vm.userSession != nil {
                 MainContainerView()
             } else {
-                AuthMenuView()
+                NavigationView {
+                    AuthMenuView()
+                }
+
             }
         }
     }

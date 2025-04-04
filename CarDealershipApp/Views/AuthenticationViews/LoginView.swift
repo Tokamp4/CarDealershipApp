@@ -9,8 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State private var username: String = ""
-    @State private var password: String = ""
+    @StateObject private var vm = LoginViewModel()
     
     var body: some View {
         VStack {
@@ -30,14 +29,14 @@ struct LoginView: View {
             }
             .edgesIgnoringSafeArea(.top)
             Spacer()
-            TextField("User Name", text: $username)
+            TextField("User Name", text: $vm.email)
                 .modifier(RoundedTextFieldStyle())
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 .frame(height: 100)
                 .font(.system(size: 24))
 
-            TextField("Password", text: $password)
+            TextField("Password", text: $vm.password)
                 .modifier(RoundedTextFieldStyle())
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
@@ -54,22 +53,12 @@ struct LoginView: View {
                     .underline()
             }
             .padding()
-//            CustomButton(title: "Login", action: {isLogged.toggle()})
-            
-            //temporary button (navigation only)
-            //NavigationLink(destination: MainContainerView()) {
-                RoundedRectangle(cornerRadius: 15)
-                    .foregroundColor(.black)
-                    .frame(width: 300, height: 70)
-                    .overlay(
-                        HStack (alignment: .center){
-                            Text("Login")
-                                .font(.title)
-                                .foregroundColor(.white)
-                        }.padding()
-                    )
-                .padding(.bottom, 50)
-            //}
+
+            CustomButton(title: "Login") {
+                Task{
+                    try await vm.login()
+                }
+            }
             Spacer()
         }
     }
