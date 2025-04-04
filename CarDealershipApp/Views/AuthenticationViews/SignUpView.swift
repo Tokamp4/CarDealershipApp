@@ -41,6 +41,7 @@ struct SignUpView: View {
                 .padding()
             TextField("User Name", text: $vm.username)
                 .modifier(RoundedTextFieldStyle())
+                .autocapitalization(.none)
                 .padding()
             TextField("Email", text: $vm.email)
                 .modifier(RoundedTextFieldStyle())
