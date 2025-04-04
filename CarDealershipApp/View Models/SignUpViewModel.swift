@@ -29,7 +29,7 @@ final class SignUpViewModel: ObservableObject {
 
         self.errorMessage = "" // Reset error message
 
-        try await AuthManager.shared.createUser(name: name, username: username, email: email, password: password)
+        try await AuthService.shared.createUser(name: name, username: username, email: email, password: password)
     }
     
     func isValidEmail(_ email: String) -> Bool {

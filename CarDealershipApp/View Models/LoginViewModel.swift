@@ -25,7 +25,7 @@ final class LoginViewModel: ObservableObject {
         
         self.errorMessage = "" // Reset error message
         
-        try await AuthManager.shared.login(email: email, password: password)
+        try await AuthService.shared.login(email: email, password: password)
     }
     
     func isValidEmail(_ email: String) -> Bool {

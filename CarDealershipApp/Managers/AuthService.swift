@@ -9,9 +9,9 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
-final class AuthManager {
+final class AuthService {
     
-    static let shared = AuthManager()
+    static let shared = AuthService()
     @Published var userSession: FirebaseAuth.User?
     
     init() {
