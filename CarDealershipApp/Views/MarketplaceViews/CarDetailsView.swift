@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CarDetailsView: View {
     
-    let car: Car
+    let car: CarModel
     
     
     var body: some View {
@@ -94,7 +94,7 @@ struct CarDetailsView: View {
 struct CarDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         
-        CarDetailsView(car: Car(
+        CarDetailsView(car: CarModel(
             imageURL: "car1.jpg",
             model: "Model S",
             manufacturer: "Tesla",

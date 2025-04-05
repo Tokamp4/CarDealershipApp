@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Car: Identifiable {
+struct CarModel: Identifiable {
     let id = UUID()
     let imageURL: String
     let model: String

@@ -8,15 +8,15 @@
 import SwiftUI
 
 let messages = [
-        Message(username: "John Doe", message: "Lorem ipsum dolor sit amet", time: "21:13"),
-        Message(username: "Jane Smith", message: "Lorem ipsum dolor sit amet", time: "12:15"),
-        Message(username: "Michael", message: "Lorem ipsum dolor sit amet", time: "12:02"),
-        Message(username: "Alice", message: "Lorem ipsum dolor sit amet", time: "10:40"),
-        Message(username: "Bob", message: "Lorem ipsum dolor sit amet", time: "12:30"),
-        Message(username: "Charlie", message: "Lorem ipsum dolor sit amet", time: "6:00"),
-        Message(username: "Jerry Joy", message: "Lorem ipsum dolor sit amet", time: "12:00"),
-        Message(username: "Thiago", message: "Lorem ipsum dolor sit amet", time: "02:30"),
-        Message(username: "Allan", message: "Lorem ipsum dolor sit amet", time: "09:00")
+        MessageModel(username: "John Doe", message: "Lorem ipsum dolor sit amet", time: "21:13"),
+        MessageModel(username: "Jane Smith", message: "Lorem ipsum dolor sit amet", time: "12:15"),
+        MessageModel(username: "Michael", message: "Lorem ipsum dolor sit amet", time: "12:02"),
+        MessageModel(username: "Alice", message: "Lorem ipsum dolor sit amet", time: "10:40"),
+        MessageModel(username: "Bob", message: "Lorem ipsum dolor sit amet", time: "12:30"),
+        MessageModel(username: "Charlie", message: "Lorem ipsum dolor sit amet", time: "6:00"),
+        MessageModel(username: "Jerry Joy", message: "Lorem ipsum dolor sit amet", time: "12:00"),
+        MessageModel(username: "Thiago", message: "Lorem ipsum dolor sit amet", time: "02:30"),
+        MessageModel(username: "Allan", message: "Lorem ipsum dolor sit amet", time: "09:00")
     ]
 
 struct ContactsView: View {

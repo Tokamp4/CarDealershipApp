@@ -9,4 +9,5 @@ import Foundation
 
 class ChatViewModel: ObservableObject {
     
+    @Published private var conversations
 }

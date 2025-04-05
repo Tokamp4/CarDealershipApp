@@ -8,9 +8,9 @@
 import SwiftUI
 
 class MessageViewModel: ObservableObject {
-    @Published var chatMessages: [Message] = [
-        Message(username: "user1", message: "Lorem ipsum dolor sit amet", time: "21:13"),
-        Message(username: "user2", message: "Lorem ipsum dolor sit amet", time: "12:15")
+    @Published var chatMessages: [MessageModel] = [
+        MessageModel(username: "user1", message: "Lorem ipsum dolor sit amet", time: "21:13"),
+        MessageModel(username: "user2", message: "Lorem ipsum dolor sit amet", time: "12:15")
     ]
 }
 

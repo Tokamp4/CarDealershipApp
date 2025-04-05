@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-let message = Message(username: "John Doe", message: "Lorem ipsum dolor sit amet", time: "12:00")
+let message = MessageModel(username: "John Doe", message: "Lorem ipsum dolor sit amet", time: "12:00")
 
 struct MessageCardView: View {
     
-    let message: Message
+    let message: MessageModel
     
     var body: some View {
         VStack {
