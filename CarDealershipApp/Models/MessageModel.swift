@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct MessageModel: Identifiable {
-    let id = UUID()
-    let username: String
-    let message: String
-    let time: String
+    @DocumentID var id: String?
+       let senderId: String
+       let text: String
+       let timestamp: Date
+       let isRead: Bool
 }

@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct ConversationModel: Identifiable, Codable {
-    let id: String
+    @DocumentID var id: String?
+        let participants: [String]
+        let lastMessage: String
+        let lastTimestamp: Date
     
 }
