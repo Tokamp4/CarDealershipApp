@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-let message = MessageModel(username: "John Doe", message: "Lorem ipsum dolor sit amet", time: "12:00")
+let convo = ConversationModel(participants: ["John Doe", "John Pork"], lastMessage: "hello", lastTimestamp: Date())
+
 
 struct MessageCardView: View {
     
-    let message: MessageModel
+    let convo: ConversationModel
     
     var body: some View {
         VStack {
@@ -23,14 +24,14 @@ struct MessageCardView: View {
                     .frame(width: 70, height: 70, alignment: .leading)
                 
                 VStack(alignment: .leading) {
-                    Text(message.username)
+                    Text(convo.participants[1])
                         .font(.headline)
-                    Text(message.message)
+                    Text(convo.lastMessage)
                         .font(.subheadline)
                         .foregroundStyle(.gray)
                 }
                 Spacer()
-                Text(message.time)
+                Text(convo.lastTimestamp.formatted())
                     .font(.footnote)
                     .padding(.trailing)
                     .foregroundStyle(.blue)
@@ -40,5 +41,5 @@ struct MessageCardView: View {
 }
 
 #Preview {
-    MessageCardView(message: message)
+    MessageCardView(convo: convo)
 }

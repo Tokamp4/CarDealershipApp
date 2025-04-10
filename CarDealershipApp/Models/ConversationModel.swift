@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct ConversationModel: Identifiable, Codable {
+struct ConversationModel: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
         let participants: [String]
         let lastMessage: String

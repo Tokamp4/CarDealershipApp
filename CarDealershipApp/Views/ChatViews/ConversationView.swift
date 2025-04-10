@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-class MessageViewModel: ObservableObject {
-    @Published var chatMessages: [MessageModel] = [
-        MessageModel(username: "user1", message: "Lorem ipsum dolor sit amet", time: "21:13"),
-        MessageModel(username: "user2", message: "Lorem ipsum dolor sit amet", time: "12:15")
-    ]
-}
+//class MessageViewModel: ObservableObject {
+//    @Published var chatMessages: [MessageModel] = [
+//        MessageModel(username: "user1", message: "Lorem ipsum dolor sit amet", time: "21:13"),
+//        MessageModel(username: "user2", message: "Lorem ipsum dolor sit amet", time: "12:15")
+//    ]
+//}
 
 
 struct ConversationView: View {
     
-    @StateObject private var viewModel = MessageViewModel()
+//    @StateObject private var viewModel = MessageViewModel()
     @State private var newMessage: String = ""
     var currentUser: String
     
