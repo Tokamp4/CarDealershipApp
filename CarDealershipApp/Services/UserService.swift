@@ -25,6 +25,12 @@ class UserService: ObservableObject {
         self.currentUser = try snapshot.data(as: UserModel.self)
     }
     
+    @MainActor
+    func fetchUser(withId uid: String) async throws -> UserModel {
+        let doc = try await Firestore.firestore().collection("users").document(uid).getDocument()
+        return try doc.data(as: UserModel.self)
+    }
+    
     func reset() {
         self.currentUser = nil
     }

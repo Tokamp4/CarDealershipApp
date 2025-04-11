@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct MessageModel: Identifiable {
+struct MessageModel: Identifiable, Decodable, Encodable{
     @DocumentID var id: String?
        let senderId: String
        let text: String

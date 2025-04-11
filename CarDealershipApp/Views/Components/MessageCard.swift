@@ -14,21 +14,28 @@ struct MessageCardView: View {
     
     let convo: ConversationModel
     
+    var userId: String
+    
     var body: some View {
+        
+        let otherParticipantId = convo.participants.first { $0 != userId } ?? "Unknown"
+        
         VStack {
             HStack(alignment: .center) {
-                Image("profileImage")
+                Image(systemName: "person.circle.fill")
                     .resizable()
                     .clipShape(Circle())
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 70, height: 70, alignment: .leading)
                 
                 VStack(alignment: .leading) {
-                    Text(convo.participants[1])
+                    Text(otherParticipantId)
                         .font(.headline)
+                        .padding(.leading)
                     Text(convo.lastMessage)
                         .font(.subheadline)
                         .foregroundStyle(.gray)
+                        .padding(.leading)
                 }
                 Spacer()
                 Text(convo.lastTimestamp.formatted())
@@ -41,5 +48,5 @@ struct MessageCardView: View {
 }
 
 #Preview {
-    MessageCardView(convo: convo)
+    MessageCardView(convo: convo, userId: "John Doe")
 }

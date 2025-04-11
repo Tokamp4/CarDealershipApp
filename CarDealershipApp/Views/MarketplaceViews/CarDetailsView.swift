@@ -65,7 +65,7 @@ struct CarDetailsView: View {
                             .frame(width: 60, height: 60)
                         Text("John Doe")
                             .font(.system(size: 20, weight: .semibold))
-                        NavigationLink(destination: ConversationView(currentUser: "user1")){
+                        NavigationLink(destination: ContactsView()){
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color.blue)
                                 .frame(width: 170, height: 30)
