@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:850795364337:ios:cfe094e1284ffb5ace8e50</string>
+	<key>DATABASE_URL</key>
+	<string>https://cardealershipapp-eaf6e-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
