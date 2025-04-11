@@ -10,6 +10,8 @@ import SwiftUI
 struct ProfileView: View {
     
     @StateObject private var vm = ProfileViewModel()
+    @State private var showLogoutAlert = false
+
     
     let carImages = ["car1", "car1", "car1"]
     
@@ -116,10 +118,30 @@ struct ProfileView: View {
                     }
                 }
             }
-            CustomButton(title: "Sign out") {
-                vm.signOut()
+            
+            Button(action: {
+                showLogoutAlert = true
+            }) {
+                Text("Log Out")
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .cornerRadius(12)
             }
-
+            .padding(.horizontal)
+            .alert(isPresented: $showLogoutAlert) {
+                Alert(
+                    title: Text("Are you sure?"),
+                    message: Text("Do you really want to log out?"),
+                    primaryButton: .destructive(Text("Log Out")) {
+                        vm.signOut()
+                        
+                        //contentview auto switchs to authMenuView when userSession is nill
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
         }
     }
 }
