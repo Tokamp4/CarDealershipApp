@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FF18D8C2DA98D770072E6D9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3FF18D8B2DA98D770072E6D9 /* FirebaseStorage */; };
 		A03B933F2D91A74200A5A8C0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A03B933E2D91A74200A5A8C0 /* FirebaseCore */; };
 		A03B93412D91A87900A5A8C0 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A03B93402D91A87900A5A8C0 /* FirebaseAuth */; };
 		A0566A972D9C41DD00DF77CA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A0566A962D9C41DD00DF77CA /* FirebaseFirestore */; };
@@ -30,6 +31,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A03B933F2D91A74200A5A8C0 /* FirebaseCore in Frameworks */,
+				3FF18D8C2DA98D770072E6D9 /* FirebaseStorage in Frameworks */,
 				A03B93412D91A87900A5A8C0 /* FirebaseAuth in Frameworks */,
 				A0566A972D9C41DD00DF77CA /* FirebaseFirestore in Frameworks */,
 			);
@@ -85,6 +87,7 @@
 				A03B933E2D91A74200A5A8C0 /* FirebaseCore */,
 				A03B93402D91A87900A5A8C0 /* FirebaseAuth */,
 				A0566A962D9C41DD00DF77CA /* FirebaseFirestore */,
+				3FF18D8B2DA98D770072E6D9 /* FirebaseStorage */,
 			);
 			productName = CarDealershipApp;
 			productReference = 445F84222D806DF80067D963 /* CarDealershipApp.app */;
@@ -272,6 +275,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarDealershipApp/Preview Content\"";
@@ -290,6 +294,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eduardo.CarDealershipApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -301,6 +306,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarDealershipApp/Preview Content\"";
@@ -319,6 +325,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eduardo.CarDealershipApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -360,6 +367,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3FF18D8B2DA98D770072E6D9 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A03B933C2D91A71A00A5A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		A03B933E2D91A74200A5A8C0 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A03B933C2D91A71A00A5A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

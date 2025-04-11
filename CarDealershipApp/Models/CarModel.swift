@@ -1,19 +1,14 @@
-//
-//  Car.swift
-//  CarDealershipApp
-//
-//  Created by Henrique on 2025-03-18.
-//
-
 import Foundation
+import FirebaseFirestore
 
-struct CarModel: Identifiable {
-    let id = UUID()
-    let imageURL: String
-    let model: String
-    let manufacturer: String
-    let price: String
-    let year: String
-    let engineType: String
-    let condition: String
+struct CarModel: Identifiable, Codable {
+    @DocumentID var id: String?  // Firestore document ID auto generates
+    
+    var imageURL: String
+    var model: String
+    var manufacturer: String
+    var price: String
+    var year: String
+    var engineType: String
+    var condition: String
 }
