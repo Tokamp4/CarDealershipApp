@@ -6,27 +6,76 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ProfileView: View {
     
     @StateObject private var vm = ProfileViewModel()
     @State private var showLogoutAlert = false
+    @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var profileImage: UIImage? = nil
 
-    
     let carImages = ["car1", "car1", "car1"]
     
     var body: some View {
         VStack {
             ScrollView {
                 VStack {
-                    //profile info
+                    //profile (profile pic image for user to pick)
+                    
                     VStack {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(.gray)
-                            .overlay(Image(systemName: "profileImage").offset(x: 15, y: -15))
+                        if let image = profileImage {
+                            Image(uiImage: image)
+                                .resizable()
+                                .clipShape(Circle())
+                                .frame(width: 120, height: 120)
+                                .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                            
+                        } else if let urlString = vm.profileImageUrl, let url = URL(string: urlString) {
+                            AsyncImage(url: url) { phase in
+                                
+                                if let image = phase.image {
+                                    image.resizable()
+                                    
+                                } else if phase.error != nil {
+                                    Image(systemName: "person.crop.circle.fill")
+                                        .resizable()
+                                        .foregroundColor(.gray)
+                                }
+                                else
+                                {
+                                    ProgressView()
+                                }
+                            }
+                            .clipShape(Circle())
+                            .frame(width: 120, height: 120)
+                            .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                            
+                        } else {
+                            
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .frame(width: 120, height: 120)
+                                .foregroundColor(.gray)
+                        }
+
+                        PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
+                            Text("Change Profile Picture")
+                                .font(.subheadline)
+                                .foregroundColor(.blue)
+                        }
                         
+                        .onChange(of: selectedItem) {
+                            Task {
+                                if let data = try? await selectedItem?.loadTransferable(type: Data.self),
+                                   let uiImage = UIImage(data: data) {
+                                    self.profileImage = uiImage
+                                    vm.uploadProfileImage(image: uiImage)
+                                }
+                            }
+                        }
+
+
                         Text("Main Account")
                             .font(.title2)
                             .fontWeight(.bold)
@@ -36,20 +85,19 @@ struct ProfileView: View {
                             .foregroundColor(.gray)
                     }
                     .padding(.top, 10)
-                    Spacer()
-                    
+
                     //about section
                     VStack(alignment: .leading, spacing: 5) {
                         Text("About")
                             .font(.headline)
                             .foregroundColor(.gray)
-                        
                         Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
                             .font(.body)
                             .foregroundColor(.gray)
                     }
-                    .padding(.all)
                     
+                    .padding(.all)
+
                     //"your" cars section
                     HStack {
                         Text("Your Car’s")
@@ -66,22 +114,20 @@ struct ProfileView: View {
                         }
                     }
                     .padding(.horizontal)
-                    
+
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(carImages, id: \..self) { image in
-                                ZStack(alignment: .topTrailing){
+                            ForEach(carImages, id: \.self) { image in
+                                ZStack(alignment: .topTrailing) {
                                     Image(image)
                                         .resizable()
                                         .frame(width: 180, height: 100)
                                         .cornerRadius(10)
-                                    Button(action: {
-                                        //we make the checkmark a toggle so we can switch from it being an x or a checkmark
-                                    }) {
+                                    Button(action: {}) {
                                         Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.green)
-                                        .padding(5)
-                                }
+                                            .foregroundColor(.green)
+                                            .padding(5)
+                                    }
                                 }
                             }
                         }
@@ -104,10 +150,10 @@ struct ProfileView: View {
                         }
                     }
                     .padding(.horizontal)
-                    
+
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(carImages, id: \..self) { image in
+                            ForEach(carImages, id: \.self) { image in
                                 Image(image)
                                     .resizable()
                                     .frame(width: 180, height: 100)
@@ -118,7 +164,7 @@ struct ProfileView: View {
                     }
                 }
             }
-            
+
             Button(action: {
                 showLogoutAlert = true
             }) {
@@ -136,19 +182,10 @@ struct ProfileView: View {
                     message: Text("Do you really want to log out?"),
                     primaryButton: .destructive(Text("Log Out")) {
                         vm.signOut()
-                        
-                        //contentview auto switchs to authMenuView when userSession is nill
                     },
                     secondaryButton: .cancel()
                 )
             }
         }
-    }
-}
-
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
-            .environmentObject(SignUpViewModel())
     }
 }
