@@ -114,6 +114,7 @@ class CarViewModel: ObservableObject {
                 year: "2018",
                 engineType: "Gasoline",
                 condition: "Used"
+                , userId: "test"
             ),
             CarModel(
                 imageURL: "https://via.placeholder.com/150",
@@ -123,6 +124,7 @@ class CarViewModel: ObservableObject {
                 year: "2021",
                 engineType: "Electric",
                 condition: "New"
+                , userId: "test"
             ),
             CarModel(
                 imageURL: "https://via.placeholder.com/150",
@@ -132,6 +134,7 @@ class CarViewModel: ObservableObject {
                 year: "2016",
                 engineType: "Gasoline",
                 condition: "Used"
+                , userId: "test"
             )
         ]
     }
@@ -148,6 +151,7 @@ class CarViewModel: ObservableObject {
                     year: year,
                     engineType: engineType,
                     condition: condition
+                    , userId: "test"
                 )
 
                 FirestoreService().uploadCar(newCar) { result in

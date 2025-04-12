@@ -11,4 +11,6 @@ struct CarModel: Identifiable, Codable {
     var year: String
     var engineType: String
     var condition: String
+    var userId: String
+
 }

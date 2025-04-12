@@ -13,9 +13,33 @@ import UIKit
 final class ProfileViewModel: ObservableObject {
     
     @Published var profileImageUrl: String?
+    @Published var recentlyViewed: [CarModel] = []
+    @Published var myCars: [CarModel] = []
 
     init() {
         fetchProfileImageUrl()
+        fetchRecentlyViewedCars()
+        fetchMyCars()
+    }
+    
+
+    func fetchMyCars() {
+        CarService.fetchCarsForCurrentUser { cars in
+            DispatchQueue.main.async {
+                self.myCars = cars
+            }
+        }
+    }
+
+    
+    func fetchRecentlyViewedCars() {
+        RecentlyViewedService.getRecentlyViewed { carIds in
+            CarService.fetchCarsByIds(carIds) { cars in
+                DispatchQueue.main.async {
+                    self.recentlyViewed = cars
+                }
+            }
+        }
     }
 
     func signOut() {

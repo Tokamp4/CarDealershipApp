@@ -102,6 +102,8 @@ struct CarDetailsView_Previews: PreviewProvider {
             year: "2022",
             engineType: "Electric",
             condition: "New"
+            , userId: "test"
+            
         ))
     }
 }
