@@ -1,12 +1,9 @@
 import SwiftUI
-import PhotosUI
 import Firebase
 import FirebaseStorage
 import FirebaseFirestore
 
 struct ListCarView: View {
-    @State private var imageData: Data?
-    @State private var selectedItem: PhotosPickerItem?
     @State private var model: String = ""
     @State private var manufacturer: String = ""
     @State private var vehicleType: String = ""
@@ -14,125 +11,129 @@ struct ListCarView: View {
     @State private var year: String = ""
     @State private var engineType: String = ""
 
+    @State private var firebaseImages: [String] = [] // URLs from Firebase
+    @State private var selectedFirebaseImageURLs: [String] = []
+
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
                 Text("New Vehicle Listing")
                     .font(.title)
                     .padding(.horizontal)
-                
-                // Photo Picker
-                PhotosPicker(
-                    selection: $selectedItem,
-                    matching: .images,
-                    photoLibrary: .shared()
-                ) {
+
+                // Button to fetch Firebase images
+                Button(action: {
+                    print("Fetch Firebase images button pressed.") // Add log
+                    fetchFirebaseImages()
+                }) {
                     VStack {
-                        if let imageData,
-                           let uiImage = UIImage(data: imageData) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .clipped()
-                                .cornerRadius(10)
-                        } else {
-                            Image(systemName: "camera")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                                .foregroundColor(.gray)
-                        }
-                        Text("Add photos/videos")
-                            .foregroundColor(.gray)
+                        Image(systemName: "photo.on.rectangle.angled")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                            .foregroundColor(.blue)
+                        Text("Browse from Library")
+                            .foregroundColor(.blue)
                             .font(.headline)
-                            .padding(.top, 10)
                     }
-                    .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.white)
                     .cornerRadius(10)
-                    .shadow(color: Color.gray.opacity(0.5), radius: 5, x: 0, y: 2)
+                    .shadow(radius: 3)
                 }
-                .onChange(of: selectedItem) { newItem in
-                    Task {
-                        if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                            imageData = data
+                Spacer()
+
+                // Firebase image previews
+                if !firebaseImages.isEmpty {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(firebaseImages, id: \.self) { urlString in
+                                let isSelected = selectedFirebaseImageURLs.contains(urlString)
+                                AsyncImage(url: URL(string: urlString)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                } placeholder: {
+                                    Color.gray.opacity(0.2)
+                                }
+                                .frame(width: 100, height: 100)
+                                .clipped()
+                                .cornerRadius(8)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
+                                )
+                                .onTapGesture {
+                                    if isSelected {
+                                        selectedFirebaseImageURLs.removeAll { $0 == urlString }
+                                    } else {
+                                        selectedFirebaseImageURLs.append(urlString)
+                                    }
+                                }
+                            }
                         }
+                        .padding(.vertical)
                     }
                 }
 
-                // Text Fields
+                // Text fields
                 Group {
-                    TextField("Model", text: $model)
-                        .modifier(RoundedTextFieldStyle())
-                    TextField("Manufacturer", text: $manufacturer)
-                        .modifier(RoundedTextFieldStyle())
-                    TextField("Vehicle Type", text: $vehicleType)
-                        .modifier(RoundedTextFieldStyle())
-                    TextField("Car Condition", text: $carCondition)
-                        .modifier(RoundedTextFieldStyle())
-                    TextField("Year", text: $year)
-                        .modifier(RoundedTextFieldStyle())
-                    TextField("Engine", text: $engineType)
-                        .modifier(RoundedTextFieldStyle())
+                    TextField("Model", text: $model).modifier(RoundedTextFieldStyle())
+                    TextField("Manufacturer", text: $manufacturer).modifier(RoundedTextFieldStyle())
+                    TextField("Vehicle Type", text: $vehicleType).modifier(RoundedTextFieldStyle())
+                    TextField("Car Condition", text: $carCondition).modifier(RoundedTextFieldStyle())
+                    TextField("Year", text: $year).modifier(RoundedTextFieldStyle())
+                    TextField("Engine", text: $engineType).modifier(RoundedTextFieldStyle())
                 }
-                .padding(3)
+                Spacer()
 
                 // Upload Button
-                Button(action: {
-                    uploadPhoto { result in
-                        switch result {
-                        case .success(let url):
-                            uploadCarData(photoURL: url)
-                        case .failure(let error):
-                            print("Photo upload failed: \(error.localizedDescription)")
-                        }
-                    }
-                }) {
-                    Text("Post Vehicle")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
+                Button("Post Vehicle") {
+                    uploadCarData(photoURLs: selectedFirebaseImageURLs)
                 }
+                .frame(maxWidth: .infinity)
                 .padding()
-
-                Spacer()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
             .padding()
         }
     }
 
-    // Upload image to Firebase Storage
-    func uploadPhoto(completion: @escaping (Result<String, Error>) -> Void) {
-        guard let imageData = imageData else {
-            completion(.failure(NSError(domain: "No image selected", code: 0)))
-            return
-        }
+    // Firebase Image Fetcher
+    func fetchFirebaseImages() {
+        print("Fetching Firebase images...") // Add log
+        let storageRef = Storage.storage().reference().child("car_gallery")
 
-        let storageRef = Storage.storage().reference().child("car_images/\(UUID().uuidString).jpg")
-        storageRef.putData(imageData, metadata: nil) { metadata, error in
+        storageRef.listAll { result, error in
             if let error = error {
-                completion(.failure(error))
+                print("Failed to list Firebase images: \(error.localizedDescription)")
                 return
             }
 
-            storageRef.downloadURL { url, error in
-                if let error = error {
-                    completion(.failure(error))
-                } else if let downloadURL = url?.absoluteString {
-                    completion(.success(downloadURL))
+            // Safely unwrap the result
+            if let items = result?.items {
+                for item in items {
+                    item.downloadURL { url, error in
+                        if let url = url {
+                            DispatchQueue.main.async {
+                                // Avoid duplicates in the firebaseImages array
+                                if !firebaseImages.contains(url.absoluteString) {
+                                    firebaseImages.append(url.absoluteString)
+                                }
+                            }
+                        }
+                    }
                 }
+            } else {
+                print("No items found.")
             }
         }
     }
 
-    // Upload car details + image URL to Firestore
-    func uploadCarData(photoURL: String) {
+    // Upload car listing data
+    func uploadCarData(photoURLs: [String]) {
         let db = Firestore.firestore()
         let carData: [String: Any] = [
             "model": model,
@@ -141,7 +142,7 @@ struct ListCarView: View {
             "carCondition": carCondition,
             "year": year,
             "engineType": engineType,
-            "photoURL": photoURL,
+            "photoURLs": photoURLs,
             "timestamp": Timestamp(date: Date())
         ]
 
@@ -154,7 +155,6 @@ struct ListCarView: View {
         }
     }
 }
-
 
 // Preview
 struct ListCarView_Previews: PreviewProvider {
