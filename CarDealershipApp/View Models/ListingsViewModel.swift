@@ -78,7 +78,7 @@ import Firebase
 import FirebaseFirestore
 import UIKit
 
-class CarViewModel: ObservableObject {
+class ListingsViewModel: ObservableObject {
     @Published var cars: [CarModel] = []
     private let service = CarService()
     
@@ -107,6 +107,7 @@ class CarViewModel: ObservableObject {
     func loadDummyData() {
         self.cars = [
             CarModel(
+                id: "1",
                 imageURL: "https://via.placeholder.com/150",
                 model: "Civic",
                 manufacturer: "Honda",
@@ -117,6 +118,7 @@ class CarViewModel: ObservableObject {
                 , userId: "test"
             ),
             CarModel(
+                id: "2",
                 imageURL: "https://via.placeholder.com/150",
                 model: "Model 3",
                 manufacturer: "Tesla",
@@ -127,6 +129,7 @@ class CarViewModel: ObservableObject {
                 , userId: "test"
             ),
             CarModel(
+                id:"3",
                 imageURL: "https://via.placeholder.com/150",
                 model: "Corolla",
                 manufacturer: "Toyota",

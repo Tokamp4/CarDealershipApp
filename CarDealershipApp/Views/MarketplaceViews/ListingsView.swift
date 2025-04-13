@@ -133,7 +133,7 @@ import SwiftUI
 
 struct ListingsView: View {
     
-    @StateObject private var viewModel = CarViewModel()
+    @StateObject private var viewModel = ListingsViewModel()
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -226,5 +226,6 @@ struct ListingsView: View {
 struct ListingsView_Previews: PreviewProvider {
     static var previews: some View {
         ListingsView()
+            .previewLayout(.fixed(width: 393, height: 900)) // iPhone 14 size
     }
 }

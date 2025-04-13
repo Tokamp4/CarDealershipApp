@@ -18,10 +18,10 @@ struct MainContainerView: View {
                 .tabItem {
                     Label("Listings", systemImage: "car.fill")
                 }
-            ExchangeView()
-                .tabItem {
-                    Label("Program", systemImage: "star.fill")
-                }
+//            ExchangeView()
+//                .tabItem {
+//                    Label("Program", systemImage: "star.fill")
+//                }
             ContactsView()
                 .tabItem {
                     Label("Messages", systemImage: "message.fill")

@@ -39,6 +39,10 @@ class ConversationViewModel: ObservableObject {
         }
     }
     
+    deinit {
+        listener?.remove()
+    }
+    
     var convoId: String {
         conversation.id ?? ""
     }

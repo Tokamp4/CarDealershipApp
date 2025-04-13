@@ -7,6 +7,7 @@
 
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 
 class RecentlyViewedService {
     static func addToRecentlyViewed(carId: String) {

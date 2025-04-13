@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContactsView: View {
     
-    @StateObject private var vm = ChatViewModel()
+    @StateObject private var vm = ContactsViewModel()
     
     @State private var search: String = ""
     
