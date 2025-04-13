@@ -95,10 +95,11 @@ struct CarDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         
         CarDetailsView(car: CarModel(
-            imageURL: "car1.jpg",
+            photosURL: ["car1.jpg"],
             model: "Model S",
             manufacturer: "Tesla",
             price: "$750,000",
+            vehicleType: "",
             year: "2022",
             engineType: "Electric",
             condition: "New"

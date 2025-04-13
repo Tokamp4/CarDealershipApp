@@ -16,7 +16,7 @@ class RecentlyViewedService {
         let userRef = db.collection("users").document(uid)
 
         userRef.getDocument { snapshot, error in
-            if var data = snapshot?.data(), var list = data["recentlyViewed"] as? [String] {
+            if let data = snapshot?.data(), var list = data["recentlyViewed"] as? [String] {
                 list.removeAll { $0 == carId }
                 list.insert(carId, at: 0)
                 if list.count > 10 { list = Array(list.prefix(10)) }

@@ -11,6 +11,10 @@ import FirebaseFirestore
 
 class ContactsViewModel: ObservableObject {
     
+    @Published var conversations = [ConversationModel]()
+    @Published var currentUser: UserModel?
+    private var cancellables = Set<AnyCancellable>()
+    
     init() {
         UserService.shared.$currentUser
             .compactMap { $0 } // filters out nil values
@@ -20,10 +24,6 @@ class ContactsViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
-    @Published var conversations = [ConversationModel]()
-    @Published var currentUser: UserModel?
-    private var cancellables = Set<AnyCancellable>()
     
     func fetchConversations() async{
         do{

@@ -1,10 +1,54 @@
 import FirebaseFirestore
 import FirebaseAuth
-
+import FirebaseStorage
 
 class CarService {
     private let db = Firestore.firestore()
     
+    func fetchFirebaseImages(completion: @escaping ([String]) -> Void) {
+        let ref = Storage.storage().reference().child("car_gallery")
+        var urls: [String] = []
+
+        ref.listAll { result, error in
+            if let error = error {
+                print("Storage error: \(error.localizedDescription)")
+                return
+            }
+
+            guard let items = result?.items else { return }
+
+            let dispatchGroup = DispatchGroup()
+
+            for item in items {
+                dispatchGroup.enter()
+                item.downloadURL { url, error in
+                    if let url = url {
+                        urls.append(url.absoluteString)
+                    }
+                    dispatchGroup.leave()
+                }
+            }
+
+            dispatchGroup.notify(queue: .main) {
+                completion(urls)
+            }
+        }
+    }
+
+    func uploadCar(car: CarModel, photoURLs: [String]) async throws {
+
+        let data: [String: Any] = [
+            "model": car.model,
+            "manufacturer": car.manufacturer,
+            "carCondition": car.condition,
+            "year": car.year,
+            "engineType": car.engineType,
+            "photoURLs": photoURLs,
+            "timestamp": Timestamp(date: Date())
+        ]
+
+        try await db.collection("cars").addDocument(data: data)
+    }
     
     static func fetchCarsForCurrentUser(completion: @escaping ([CarModel]) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -49,24 +93,24 @@ class CarService {
 //            completion(false)
 //        }
 //    }
-    func addCar(_ car: CarModel, completion: @escaping (Bool) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            completion(false)
-            return
-        }
-
-        var carToSave = car
-        carToSave.userId = uid
-
-        do {
-            _ = try db.collection("cars").addDocument(from: carToSave) { error in
-                completion(error == nil)
-            }
-        } catch {
-            print("Error adding car: \(error)")
-            completion(false)
-        }
-    }
+//    func addCar(_ car: CarModel, completion: @escaping (Bool) -> Void) {
+//        guard let uid = Auth.auth().currentUser?.uid else {
+//            completion(false)
+//            return
+//        }
+//
+//        var carToSave = car
+//        carToSave.userId = uid
+//
+//        do {
+//            _ = try db.collection("cars").addDocument(from: carToSave) { error in
+//                completion(error == nil)
+//            }
+//        } catch {
+//            print("Error adding car: \(error)")
+//            completion(false)
+//        }
+//    }
     
     static func fetchCarsByIds(_ ids: [String], completion: @escaping ([CarModel]) -> Void) {
         let db = Firestore.firestore()

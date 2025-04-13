@@ -3,6 +3,93 @@ import Firebase
 import FirebaseStorage
 import FirebaseFirestore
 
+//EDUARDO VERSION
+
+//struct ListCarView: View {
+//    @StateObject private var viewModel = ListCarViewModel()
+//    @Environment(\.dismiss) private var dismiss
+//
+//    var body: some View {
+//        ScrollView {
+//            VStack(spacing: 10) {
+//                Text("New Vehicle Listing")
+//                    .font(.title)
+//                    .padding(.horizontal)
+//
+//                Button(action: {
+//                    viewModel.fetchFirebaseImages()
+//                }) {
+//                    VStack {
+//                        Image(systemName: "photo.on.rectangle.angled")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 100, height: 100)
+//                            .foregroundColor(.blue)
+//                        Text("Browse from Library")
+//                            .foregroundColor(.blue)
+//                            .font(.headline)
+//                    }
+//                    .padding()
+//                    .background(Color.white)
+//                    .cornerRadius(10)
+//                    .shadow(radius: 3)
+//                }
+//
+//                if !viewModel.firebaseImages.isEmpty {
+//                    ScrollView(.horizontal, showsIndicators: false) {
+//                        HStack {
+//                            ForEach(viewModel.firebaseImages, id: \.self) { url in
+//                                let isSelected = viewModel.selectedImages.contains(url)
+//                                AsyncImage(url: URL(string: url)) { image in
+//                                    image.resizable().scaledToFill()
+//                                } placeholder: {
+//                                    Color.gray.opacity(0.2)
+//                                }
+//                                .frame(width: 100, height: 100)
+//                                .clipped()
+//                                .cornerRadius(8)
+//                                .overlay(
+//                                    RoundedRectangle(cornerRadius: 8)
+//                                        .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
+//                                )
+//                                .onTapGesture {
+//                                    viewModel.toggleImageSelection(url: url)
+//                                }
+//                            }
+//                        }
+//                        .padding(.vertical)
+//                    }
+//                }
+//
+//                Group {
+//                    TextField("Model", text: $viewModel.model).modifier(RoundedTextFieldStyle())
+//                    TextField("Manufacturer", text: $viewModel.manufacturer).modifier(RoundedTextFieldStyle())
+//                    TextField("Price", text: $viewModel.price).modifier(RoundedTextFieldStyle())
+//                    TextField("Vehicle Type", text: $viewModel.vehicleType).modifier(RoundedTextFieldStyle())
+//                    TextField("Year", text: $viewModel.year).modifier(RoundedTextFieldStyle())
+//                    TextField("Engine Type", text: $viewModel.engineType).modifier(RoundedTextFieldStyle())
+//                    TextField("Car Condition", text: $viewModel.condition).modifier(RoundedTextFieldStyle())
+//                }
+//
+//                Button("Post Vehicle") {
+//                    Task {
+//                        await viewModel.uploadCarData()
+//                        dismiss()
+//                    }
+//                }
+//                .frame(maxWidth: .infinity)
+//                .padding()
+//                .background(Color.blue)
+//                .foregroundColor(.white)
+//                .cornerRadius(10)
+//            }
+//            .padding()
+//        }
+//    }
+//}
+
+//TSIORY VERSION
+
 struct ListCarView: View {
     @State private var model: String = ""
     @State private var manufacturer: String = ""
@@ -156,7 +243,6 @@ struct ListCarView: View {
     }
 }
 
-// Preview
 struct ListCarView_Previews: PreviewProvider {
     static var previews: some View {
         ListCarView()

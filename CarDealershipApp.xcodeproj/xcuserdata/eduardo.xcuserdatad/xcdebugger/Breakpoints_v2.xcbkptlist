@@ -3,4 +3,22 @@
    uuid = "311E7B10-82B6-4184-AF5A-A23AEF05E247"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "94FCE98A-452E-4AEF-AF79-FD92D7EA41EA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../var/folders/68/hzrw64793z970fs5nz5vgxzw0000gp/T/swift-generated-sources/@__swiftmacro_16CarDealershipApp0022CarCardViewswift_tiAIefMX45_0_33_9CD1A5AFCB275206D13AA0707CC1C367Ll7PreviewfMf_.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1"
+            endingLineNumber = "1"
+            landmarkName = "$s16CarDealershipApp0022CarCardViewswift_tiAIefMX45_0_33_9CD1A5AFCB275206D13AA0707CC1C367Ll7PreviewfMf_15PreviewRegistryfMu_"
+            landmarkType = "37">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

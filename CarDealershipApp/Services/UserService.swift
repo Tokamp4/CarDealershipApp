@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
-class UserService: ObservableObject {
+class UserService: ObservableObject{
     
     static let shared = UserService()
     @Published var currentUser: UserModel?
