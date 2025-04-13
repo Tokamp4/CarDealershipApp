@@ -1,6 +1,12 @@
 import SwiftUI
+import PhotosUI
+import Firebase
+import FirebaseStorage
+import FirebaseFirestore
 
 struct ListCarView: View {
+    @State private var imageData: Data?
+    @State private var selectedItem: PhotosPickerItem?
     @State private var model: String = ""
     @State private var manufacturer: String = ""
     @State private var vehicleType: String = ""
@@ -9,24 +15,37 @@ struct ListCarView: View {
     @State private var engineType: String = ""
 
     var body: some View {
-        ScrollView{
+        ScrollView {
             VStack(spacing: 10) {
                 Text("New Vehicle Listing")
                     .font(.title)
                     .padding(.horizontal)
-                Button(action: {
-                    // Add photos/videos action
-                }) {
+                
+                // Photo Picker
+                PhotosPicker(
+                    selection: $selectedItem,
+                    matching: .images,
+                    photoLibrary: .shared()
+                ) {
                     VStack {
-                        Image(systemName: "camera")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(.gray)
-                        Text("add photos/videos")
+                        if let imageData,
+                           let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipped()
+                                .cornerRadius(10)
+                        } else {
+                            Image(systemName: "camera")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .foregroundColor(.gray)
+                        }
+                        Text("Add photos/videos")
                             .foregroundColor(.gray)
                             .font(.headline)
-                            .multilineTextAlignment(.center)
                             .padding(.top, 10)
                     }
                     .frame(maxWidth: .infinity)
@@ -35,24 +54,41 @@ struct ListCarView: View {
                     .cornerRadius(10)
                     .shadow(color: Color.gray.opacity(0.5), radius: 5, x: 0, y: 2)
                 }
-                
+                .onChange(of: selectedItem) { newItem in
+                    Task {
+                        if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                            imageData = data
+                        }
+                    }
+                }
+
+                // Text Fields
                 Group {
                     TextField("Model", text: $model)
                         .modifier(RoundedTextFieldStyle())
                     TextField("Manufacturer", text: $manufacturer)
                         .modifier(RoundedTextFieldStyle())
-                    TextField("Vehicle Type",text: $vehicleType)
+                    TextField("Vehicle Type", text: $vehicleType)
                         .modifier(RoundedTextFieldStyle())
                     TextField("Car Condition", text: $carCondition)
                         .modifier(RoundedTextFieldStyle())
-                    TextField("Year",text:$year)
+                    TextField("Year", text: $year)
                         .modifier(RoundedTextFieldStyle())
                     TextField("Engine", text: $engineType)
                         .modifier(RoundedTextFieldStyle())
                 }
                 .padding(3)
+
+                // Upload Button
                 Button(action: {
-                    //nothing yet
+                    uploadPhoto { result in
+                        switch result {
+                        case .success(let url):
+                            uploadCarData(photoURL: url)
+                        case .failure(let error):
+                            print("Photo upload failed: \(error.localizedDescription)")
+                        }
+                    }
                 }) {
                     Text("Post Vehicle")
                         .frame(maxWidth: .infinity)
@@ -64,41 +100,63 @@ struct ListCarView: View {
                         .shadow(radius: 5)
                 }
                 .padding()
-                
+
                 Spacer()
-                
-                //                HStack {
-                //                    Spacer()
-                //                    NavigationLink(destination: Text("Listings")) {
-                //                        Image(systemName: "cart")
-                //                            .font(.title)
-                //                    }
-                //                    Spacer()
-                //                    NavigationLink(destination: Text("Program")) {
-                //                        Image(systemName: "star")
-                //                            .font(.title)
-                //                    }
-                //                    Spacer()
-                //                    NavigationLink(destination: Text("Chats")) {
-                //                        Image(systemName: "message")
-                //                            .font(.title)
-                //                    }
-                //                    Spacer()
-                //                    NavigationLink(destination: Text("Profile")) {
-                //                        Image(systemName: "person")
-                //                            .font(.title)
-                //                    }
-                //                    Spacer()
-                //                }
-                //                .padding()
-                //                .background(Color(.systemGray6))
-                //                .cornerRadius(15)
             }
             .padding()
         }
     }
+
+    // Upload image to Firebase Storage
+    func uploadPhoto(completion: @escaping (Result<String, Error>) -> Void) {
+        guard let imageData = imageData else {
+            completion(.failure(NSError(domain: "No image selected", code: 0)))
+            return
+        }
+
+        let storageRef = Storage.storage().reference().child("car_images/\(UUID().uuidString).jpg")
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            storageRef.downloadURL { url, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let downloadURL = url?.absoluteString {
+                    completion(.success(downloadURL))
+                }
+            }
+        }
+    }
+
+    // Upload car details + image URL to Firestore
+    func uploadCarData(photoURL: String) {
+        let db = Firestore.firestore()
+        let carData: [String: Any] = [
+            "model": model,
+            "manufacturer": manufacturer,
+            "vehicleType": vehicleType,
+            "carCondition": carCondition,
+            "year": year,
+            "engineType": engineType,
+            "photoURL": photoURL,
+            "timestamp": Timestamp(date: Date())
+        ]
+
+        db.collection("cars").addDocument(data: carData) { error in
+            if let error = error {
+                print("Failed to upload car data: \(error.localizedDescription)")
+            } else {
+                print("Car data uploaded successfully!")
+            }
+        }
+    }
 }
 
+
+// Preview
 struct ListCarView_Previews: PreviewProvider {
     static var previews: some View {
         ListCarView()
