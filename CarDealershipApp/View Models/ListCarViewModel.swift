@@ -62,7 +62,7 @@ class ListCarViewModel: ObservableObject {
             photosURL: selectedImages,
             model: model,
             manufacturer: manufacturer,
-            price: "$0",
+            price: price,
             vehicleType: vehicleType,
             year: year,
             engineType: engineType,

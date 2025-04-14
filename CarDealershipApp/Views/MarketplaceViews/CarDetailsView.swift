@@ -21,7 +21,7 @@ struct CarDetailsView: View {
                             AsyncImage(url: URL(string: imageURL)) { image in
                                 image.resizable()
                                      .scaledToFill()
-                                     .frame(height: 250)
+                                     .frame(height: 200) // Reduced from 250
                                      .clipped() // Ensures image is clipped to fit the frame
                             } placeholder: {
                                 ProgressView() // Loading indicator while image is being fetched
@@ -30,7 +30,7 @@ struct CarDetailsView: View {
                         }
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                    .frame(height: 250) // Adjust the height of the image carousel
+                    .frame(height: 200) // Reduced from 250
                 }
 
                 VStack(alignment: .leading, spacing: 8) {
@@ -150,12 +150,12 @@ struct CarDetailsView: View {
                 print("Error fetching user: \(error.localizedDescription)")
                 return
             }
-            
+
             guard let data = snapshot?.data() else {
                 print("No data found for user")
                 return
             }
-            
+
             if let id = snapshot?.documentID,
                let name = data["name"] as? String,
                let username = data["username"] as? String,
@@ -172,8 +172,8 @@ struct CarDetailsView: View {
     // Fetch car images from Firebase Storage (we use the provided Firebase URL directly)
     private func fetchCarImages() {
         // Add the provided image URL to the imageURLs array
-        let carImageURL = "https://firebasestorage.googleapis.com/v0/b/cardealershipapp-eaf6e.firebasestorage.app/o/car_images%2Ftesla.jpg?alt=media&token=66f63cc9-b1bd-4d35-aad5-b0430373ade5"
-        
+        let carImageURL = "https://firebasestorage.googleapis.com/v0/b/cardealershipapp-eaf6e.firebasestorage.app/o/car_images%2Fcivic.jpg?alt=media&token=17791f5f-1a35-473f-b9a3-74a8b54e9802"
+
         // Add the URL to the imageURLs array to display it
         imageURLs.append(carImageURL)
     }
@@ -228,9 +228,8 @@ struct CarDetailsView: View {
 
 struct CarDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        
         CarDetailsView(car: CarModel(
-            photosURL: ["https://firebasestorage.googleapis.com/v0/b/cardealershipapp-eaf6e.firebasestorage.app/o/car_images%2Ftesla.jpg?alt=media&token=66f63cc9-b1bd-4d35-aad5-b0430373ade5"],
+            photosURL: ["https://firebasestorage.googleapis.com/v0/b/cardealershipapp-eaf6e.firebasestorage.app/o/car_images%2Fcivic.jpg?alt=media&token=17791f5f-1a35-473f-b9a3-74a8b54e9802"],
             model: "Model S",
             manufacturer: "Tesla",
             price: "$750,000",
