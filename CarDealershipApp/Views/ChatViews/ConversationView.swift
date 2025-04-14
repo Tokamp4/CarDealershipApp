@@ -54,10 +54,10 @@ struct ConversationView: View {
                     .frame(minHeight: 40)
                 
                 Button {
-                    Task{
+                    Task {
                         await vm.sendMessage(text: newMessage)
+                        newMessage = "" // Clear input
                     }
-                    newMessage = ""
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.blue)
@@ -66,9 +66,19 @@ struct ConversationView: View {
             }
             .padding()
         }
+        .onAppear {
+            Task {
+                await vm.fetchOtherUser()
+                vm.observeMessages() // 👈 Start listening to new messages
+            }
+        }
     }
 }
 
 #Preview {
-    ConversationView(convo: convoModel, currentUser: UserModel(id: "previewUser", name: "John Doe", username: "johndoe", email: "john@gmail.com"), isPreview: true)
+    ConversationView(
+        convo: convoModel,
+        currentUser: UserModel(id: "previewUser", name: "John Doe", username: "johndoe", email: "john@gmail.com"),
+        isPreview: true
+    )
 }

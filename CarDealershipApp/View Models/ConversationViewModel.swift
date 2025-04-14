@@ -86,7 +86,7 @@ class ConversationViewModel: ObservableObject {
     }
     
     @MainActor
-    private func fetchOtherUser() async {
+    public func fetchOtherUser() async {
         guard let otherUserId = conversation.participants.first(where: { $0 != currentUser.id }) else { return }
         do {
             otherUser = try await UserService.shared.fetchUser(withId: otherUserId)
@@ -95,7 +95,7 @@ class ConversationViewModel: ObservableObject {
         }
     }
     
-    func observeMessages() {
+    public func observeMessages() {
         guard let convoId = conversation.id else { return }
 
         let db = Firestore.firestore()
