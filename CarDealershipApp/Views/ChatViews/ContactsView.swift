@@ -10,12 +10,12 @@ import SwiftUI
 struct ContactsView: View {
     
     @StateObject private var vm = ContactsViewModel()
-    
     @State private var search: String = ""
+    @State private var navPath = NavigationPath()
     
     var body: some View {
-        NavigationView{
-            VStack(spacing: 20){
+        NavigationStack(path: $navPath) {
+            VStack(spacing: 20) {
                 TextField("Search...", text: $search)
                     .padding()
                     .background(Color.gray.opacity(0.1))
@@ -24,17 +24,21 @@ struct ContactsView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.gray, lineWidth: 1)
-                            
                     )
                     .padding(.top)
-                ScrollView{
+                
+                ScrollView {
                     if vm.conversations.isEmpty {
                         Text("You don't have any contacts. Message sellers!")
                             .padding()
                             .frame(width: 300)
                     } else {
-                        ForEach(vm.conversations, id: \.self){convo in
-                            NavigationLink(destination: ConversationView(convo: convo, currentUser: vm.currentUser!, isPreview: false)){
+                        ForEach(vm.conversations, id: \.id) { convo in
+                            Button {
+                                if let currentUser = vm.currentUser {
+                                    navPath.append(convo)
+                                }
+                            } label: {
                                 MessageCardView(convo: convo, userId: vm.currentUser?.id ?? "")
                                     .padding(.bottom)
                             }
@@ -42,8 +46,13 @@ struct ContactsView: View {
                     }
                 }
             }
-            .onAppear{
+            .onAppear {
                 vm.startListeningToUser()
+            }
+            .navigationDestination(for: ConversationModel.self) { convo in
+                if let currentUser = vm.currentUser {
+                    ConversationView(convo: convo, currentUser: currentUser, isPreview: false)
+                }
             }
         }
     }

@@ -14,6 +14,20 @@ struct MessageCardView: View {
     let convo: ConversationModel
     var userId: String
     
+    private var formattedTimestamp: String {
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+        
+        if calendar.isDateInToday(convo.lastTimestamp) {
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short // "3:45 PM"
+        } else {
+            formatter.dateFormat = "MMM d" // "Apr 12"
+        }
+        
+        return formatter.string(from: convo.lastTimestamp)
+    }
+    
     @State private var otherUserName: String = "Loading..."
     
     var body: some View {
@@ -37,7 +51,7 @@ struct MessageCardView: View {
                         .lineLimit(1)
                 }
                 Spacer()
-                Text(convo.lastTimestamp.formatted())
+                Text(formattedTimestamp)
                     .font(.footnote)
                     .padding(.trailing)
                     .foregroundStyle(.blue)
