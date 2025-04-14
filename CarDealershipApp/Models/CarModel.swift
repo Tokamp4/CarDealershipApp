@@ -2,8 +2,8 @@ import Foundation
 import FirebaseFirestore
 
 struct CarModel: Identifiable, Codable {
-    @DocumentID var id: String?  // Firestore document ID auto generates
-    
+    @DocumentID var id: String? 
+
     let photosURL: [String]
     let model: String
     let manufacturer: String
@@ -14,4 +14,14 @@ struct CarModel: Identifiable, Codable {
     let condition: String
     let userId: String
 
+    
+    var imageURL: String? {
+        return photosURL.first
+    }
+}
+
+extension CarModel {
+    var wrappedId: String {
+        id ?? UUID().uuidString
+    }
 }

@@ -8,11 +8,31 @@
 import SwiftUI
 
 struct LogoutButton: View {
+    @Binding var showLogoutAlert: Bool
+    var onLogout: () -> Void
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: {
+            showLogoutAlert = true
+        }) {
+            Text("Log Out")
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.red)
+                .cornerRadius(12)
+        }
+        .padding(.horizontal)
+        .alert(isPresented: $showLogoutAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text("Do you really want to log out?"),
+                primaryButton: .destructive(Text("Log Out")) {
+                    onLogout()
+                },
+                secondaryButton: .cancel()
+            )
+        }
     }
 }
 
-#Preview {
-    LogoutButton()
-}

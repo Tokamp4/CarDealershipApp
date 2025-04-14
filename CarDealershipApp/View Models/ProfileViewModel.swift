@@ -8,21 +8,26 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 import UIKit
 
 final class ProfileViewModel: ObservableObject {
-    
+
     @Published var profileImageUrl: String?
     @Published var recentlyViewed: [CarModel] = []
     @Published var myCars: [CarModel] = []
+    @Published var displayName: String? = nil
+    @Published var bio: String? = nil
 
     init() {
         fetchProfileImageUrl()
         fetchRecentlyViewedCars()
         fetchMyCars()
+        fetchDisplayName()
     }
-    
 
+    
+    
     func fetchMyCars() {
         CarService.fetchCarsForCurrentUser { cars in
             DispatchQueue.main.async {
@@ -31,7 +36,6 @@ final class ProfileViewModel: ObservableObject {
         }
     }
 
-    
     func fetchRecentlyViewedCars() {
         RecentlyViewedService.getRecentlyViewed { carIds in
             CarService.fetchCarsByIds(carIds) { cars in
@@ -42,6 +46,24 @@ final class ProfileViewModel: ObservableObject {
         }
     }
 
+    func updateBio(newBio: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        Firestore.firestore().collection("users").document(uid).updateData([
+            "bio": newBio
+        ]) { error in
+            if let error = error {
+                print("Failed to update bio: \(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    self.bio = newBio
+                    print("Bio updated.")
+                }
+            }
+        }
+    }
+
+    
     func signOut() {
         AuthService.shared.signOut()
         UserService.shared.reset()
@@ -56,14 +78,12 @@ final class ProfileViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.profileImageUrl = imageUrl
                 }
-
                 let db = Firestore.firestore()
                 db.collection("users").document(uid).setData([
                     "profileImageUrl": imageUrl
                 ], merge: true)
-
             case .failure(let error):
-                print("Image upload was not sucessful!: \(error.localizedDescription)")
+                print("Image upload failed: \(error.localizedDescription)")
             }
         }
     }
@@ -80,4 +100,38 @@ final class ProfileViewModel: ObservableObject {
             }
         }
     }
+    
+
+    func fetchDisplayName() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            print(" No UID found.") //debugging
+            return
+        }
+
+        print("Looking for user with UID: \(uid)") //debugging
+
+        Firestore.firestore().collection("users").document(uid).getDocument { snapshot, error in
+            if let error = error {
+                print("Firestore error: \(error.localizedDescription)") //debugging
+                return
+            }
+
+            guard let data = snapshot?.data() else {
+                print("No document found for user.") //debugging
+                return
+            }
+
+            print(" Fetched user data: \(data)") //debugging
+
+            if let name = data["name"] as? String {
+                print("Loaded name from Firestore: \(name)")//debugging
+                DispatchQueue.main.async {
+                    self.displayName = name
+                }
+            } else {
+                print(" 'name' field not found or not a String.")//debugging
+            }
+        }
+    }
+
 }
