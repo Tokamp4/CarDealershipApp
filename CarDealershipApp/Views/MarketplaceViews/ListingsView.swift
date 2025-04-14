@@ -9,7 +9,7 @@ struct ListingsView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack { 
                 HStack(spacing: 15){
                     NavigationLink(destination: ListCarView()) {
                         RoundedRectangle(cornerRadius: 10)
