@@ -6,7 +6,7 @@ class CarService {
     private let db = Firestore.firestore()
     
     func fetchFirebaseImages(completion: @escaping ([String]) -> Void) {
-        let ref = Storage.storage().reference().child("car_gallery")
+        let ref = Storage.storage().reference().child("car_images")
         var urls: [String] = []
 
         ref.listAll { result, error in
@@ -35,19 +35,10 @@ class CarService {
         }
     }
 
-    func uploadCar(car: CarModel, photoURLs: [String]) async throws {
-
-        let data: [String: Any] = [
-            "model": car.model,
-            "manufacturer": car.manufacturer,
-            "carCondition": car.condition,
-            "year": car.year,
-            "engineType": car.engineType,
-            "photoURLs": photoURLs,
-            "timestamp": Timestamp(date: Date())
-        ]
-
-        try await db.collection("cars").addDocument(data: data)
+    func uploadCar(car: CarModel) async throws {
+        let carsRef = db.collection("cars")
+        try carsRef.addDocument(from: car)
+//        try await db.collection("cars").addDocument(data: data)
     }
     
     static func fetchCarsForCurrentUser(completion: @escaping ([CarModel]) -> Void) {

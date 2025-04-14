@@ -42,6 +42,9 @@ struct ContactsView: View {
                     }
                 }
             }
+            .onAppear{
+                vm.startListeningToUser()
+            }
         }
     }
 }

@@ -14,16 +14,24 @@ class ContactsViewModel: ObservableObject {
     @Published var conversations = [ConversationModel]()
     @Published var currentUser: UserModel?
     private var cancellables = Set<AnyCancellable>()
+    private var hasStartedListening = false
     
     init() {
-        UserService.shared.$currentUser
-            .compactMap { $0 } // filters out nil values
-            .sink { [weak self] user in
-                self?.currentUser = user
-                self?.listenToConversations()
-            }
-            .store(in: &cancellables)
     }
+    
+    func startListeningToUser() {
+       guard !hasStartedListening else { return }
+       hasStartedListening = true
+       
+       UserService.shared.$currentUser
+           .compactMap { $0 }
+           .sink { [weak self] user in
+               print("User received: \(user.id)")
+               self?.currentUser = user
+               self?.listenToConversations()
+           }
+           .store(in: &cancellables)
+   }
     
     func fetchConversations() async{
         do{

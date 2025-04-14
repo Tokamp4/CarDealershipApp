@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 import SwiftUI
 
 class ListCarViewModel: ObservableObject {
@@ -16,11 +17,23 @@ class ListCarViewModel: ObservableObject {
     @Published var year: String = ""
     @Published var engineType: String = ""
     @Published var condition: String = ""
+    
+    @Published var currentUser: UserModel?
 
     @Published var firebaseImages: [String] = []
     @Published var selectedImages: [String] = []
 
     private let carService = CarService()
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(){
+        UserService.shared.$currentUser
+            .compactMap { $0 } // filters out nil values
+            .sink { [weak self] user in
+                self?.currentUser = user
+            }
+            .store(in: &cancellables)
+    }
 
     func fetchFirebaseImages() {
         carService.fetchFirebaseImages { [weak self] urls in
@@ -39,6 +52,12 @@ class ListCarViewModel: ObservableObject {
     }
 
     func uploadCarData() async {
+        
+        guard let uid = currentUser?.id else{
+            print("User is empty (listcarview)")
+            return
+        }
+        
         let car = CarModel(
             photosURL: selectedImages,
             model: model,
@@ -48,11 +67,11 @@ class ListCarViewModel: ObservableObject {
             year: year,
             engineType: engineType,
             condition: condition,
-            userId: "TODO-UserID"
+            userId: uid
         )
 
         do {
-            try await carService.uploadCar(car: car, photoURLs: selectedImages)
+            try await carService.uploadCar(car: car)
             print("Car uploaded successfully.")
         } catch {
             print("Upload failed: \(error.localizedDescription)")

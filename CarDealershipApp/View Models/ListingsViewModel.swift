@@ -79,20 +79,28 @@ import FirebaseFirestore
 import Combine
 
 class ListingsViewModel: ObservableObject {
-    @Published var cars: [CarModel] = []
+    @Published var cars = [CarModel]()
     @Published var currentUser: UserModel?
     private let service = CarService()
     private var cancellables = Set<AnyCancellable>()
-    
+    private var hasStartedListening = false
+        
     init() {
-        UserService.shared.$currentUser
-            .compactMap { $0 } // filters out nil values
-            .sink { [weak self] user in
-                self?.currentUser = user
-                self?.listenToListings()
-            }
-            .store(in: &cancellables)
     }
+    
+    func startListeningToUser() {
+           guard !hasStartedListening else { return }
+           hasStartedListening = true
+           
+           UserService.shared.$currentUser
+               .compactMap { $0 }
+               .sink { [weak self] user in
+                   print("User received: \(user.id)")
+                   self?.currentUser = user
+                   self?.listenToListings()
+               }
+               .store(in: &cancellables)
+       }
     
     func listenToListings() {
         guard let uid = currentUser?.id else {
@@ -113,7 +121,8 @@ class ListingsViewModel: ObservableObject {
                     print("no cars found")
                     return
                 }
-                
+                print("Snapshot: \(String(describing: snapshot))")
+                print("Documents: \(String(describing: snapshot?.documents))")
                 do {
                     self?.cars = try documents.map{
                         try $0.data(as: CarModel.self)
