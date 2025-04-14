@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ListingsView: View {
     
-    @StateObject private var viewModel = ListingsViewModel()
+    @ObservedObject private var viewModel = ListingsViewModel()
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     

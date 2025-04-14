@@ -15,11 +15,11 @@ struct ContentView: View {
         Group{
             if vm.userSession != nil {
                 MainContainerView()
+                    .id(UserService.shared.currentUser)
             } else {
                 NavigationView {
                     AuthMenuView()
                 }
-
             }
         }
     }

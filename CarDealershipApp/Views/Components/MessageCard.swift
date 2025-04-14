@@ -11,14 +11,12 @@ let convo = ConversationModel(participants: ["John Doe", "John Pork"], lastMessa
 
 
 struct MessageCardView: View {
-    
     let convo: ConversationModel
-    
     var userId: String
     
+    @State private var otherUserName: String = "Loading..."
+    
     var body: some View {
-        
-        let otherParticipantId = convo.participants.first { $0 != userId } ?? "Unknown"
         
         VStack {
             HStack(alignment: .center) {
@@ -29,13 +27,14 @@ struct MessageCardView: View {
                     .frame(width: 70, height: 70, alignment: .leading)
                 
                 VStack(alignment: .leading) {
-                    Text(otherParticipantId)
+                    Text(otherUserName)
                         .font(.headline)
                         .padding(.leading)
                     Text(convo.lastMessage)
                         .font(.subheadline)
                         .foregroundStyle(.gray)
                         .padding(.leading)
+                        .lineLimit(1)
                 }
                 Spacer()
                 Text(convo.lastTimestamp.formatted())
@@ -43,7 +42,21 @@ struct MessageCardView: View {
                     .padding(.trailing)
                     .foregroundStyle(.blue)
             }
-        }.padding(.horizontal)
+        }
+        .padding(.horizontal)
+        .onAppear {
+            fetchOtherUser()
+        }
+    }
+    
+    private func fetchOtherUser() {
+        let otherParticipantId = convo.participants.first { $0 != userId } ?? "Unknown"
+        
+        ChatService.fetchUserNameById(userId: otherParticipantId) { name in
+            DispatchQueue.main.async {
+                self.otherUserName = name ?? "Unknown User"
+            }
+        }
     }
 }
 

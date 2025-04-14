@@ -69,7 +69,7 @@ struct ConversationView: View {
         .onAppear {
             Task {
                 await vm.fetchOtherUser()
-                vm.observeMessages() // 👈 Start listening to new messages
+                vm.observeMessages()
             }
         }
     }

@@ -24,7 +24,7 @@ final class AuthService {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
-            //try await UserService.shared.fetchCurrentUser()
+            try await UserService.shared.fetchCurrentUser()
         } catch {
             print("failed to create user \(error.localizedDescription)")
         }
@@ -57,6 +57,6 @@ final class AuthService {
     func signOut() {
         try? Auth.auth().signOut()
         self.userSession = nil
-        //UserService.shared.reset()
+        UserService.shared.reset()
     }
 }

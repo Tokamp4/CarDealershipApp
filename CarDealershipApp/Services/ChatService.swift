@@ -11,6 +11,19 @@ import FirebaseFirestore
 
 class ChatService {
     
+    static func fetchUserNameById(userId: String, completion: @escaping (String?) -> Void) {
+        let db = Firestore.firestore()
+        db.collection("users").document(userId).getDocument { document, error in
+            if let document = document, document.exists {
+                let data = document.data()
+                let username = data?["name"] as? String
+                completion(username)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
     static func fetchConversations(uid: String) async throws -> [ConversationModel] {
             let query = Firestore.firestore()
                 .collection("conversations")
