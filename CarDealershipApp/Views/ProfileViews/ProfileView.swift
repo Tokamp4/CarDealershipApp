@@ -1,5 +1,6 @@
 import SwiftUI
 import PhotosUI
+import Foundation
 
 struct ProfileView: View {
 
@@ -7,6 +8,7 @@ struct ProfileView: View {
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var profileImage: UIImage? = nil
     @State private var showLogoutAlert = false
+    
 
     var body: some View {
         NavigationView {
@@ -66,9 +68,21 @@ struct ProfileView: View {
                         .font(.headline)
                         .fontWeight(.semibold)
                 }
+                
             }
+            .onReceive(NotificationCenter.default.publisher(for: .didDeleteCar)) { _ in
+                print("Car deleted — refreshing car list.")
+                vm.fetchMyCars()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .didUploadCar)) { _ in
+                    print(" Car uploaded — refreshing car list.")
+                    vm.fetchMyCars()
+                }
+
         }
+        
     }
+    
 }
 
 
@@ -77,3 +91,5 @@ struct ProfileView_Previews: PreviewProvider {
         ProfileView()
     }
 }
+
+

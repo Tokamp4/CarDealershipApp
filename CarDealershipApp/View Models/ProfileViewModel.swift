@@ -26,15 +26,27 @@ final class ProfileViewModel: ObservableObject {
         fetchDisplayName()
     }
 
-    
-    
+    //debugging/
     func fetchMyCars() {
         CarService.fetchCarsForCurrentUser { cars in
+            print("Retrieved \(cars.count) car(s) for current user.")
+            for car in cars {
+                print("Car: \(car.model) | Owner: \(car.userId)")
+            }
+
             DispatchQueue.main.async {
                 self.myCars = cars
             }
         }
     }
+
+//    func fetchMyCars() {
+//        CarService.fetchCarsForCurrentUser { cars in
+//            DispatchQueue.main.async {
+//                self.myCars = cars
+//            }
+//        }
+//    }
 
     func fetchRecentlyViewedCars() {
         RecentlyViewedService.getRecentlyViewed { carIds in

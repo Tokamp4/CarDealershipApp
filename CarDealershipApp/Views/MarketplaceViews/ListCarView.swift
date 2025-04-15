@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 import Firebase
 import FirebaseStorage
 import FirebaseFirestore
@@ -10,6 +11,8 @@ struct ListCarView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
+       
+        
         ScrollView {
             VStack(spacing: 10) {
                 Text("New Vehicle Listing")
@@ -73,8 +76,16 @@ struct ListCarView: View {
 
                 Button("Post Vehicle") {
                     Task {
-                        if !viewModel.model.isEmpty && !viewModel.manufacturer.isEmpty && !viewModel.price.isEmpty && !viewModel.vehicleType.isEmpty && !viewModel.year.isEmpty && !viewModel.engineType.isEmpty && !viewModel.condition.isEmpty{
+                        if !viewModel.model.isEmpty &&
+                            !viewModel.manufacturer.isEmpty &&
+                            !viewModel.price.isEmpty &&
+                            !viewModel.vehicleType.isEmpty &&
+                            !viewModel.year.isEmpty &&
+                            !viewModel.engineType.isEmpty &&
+                            !viewModel.condition.isEmpty {
+
                             await viewModel.uploadCarData()
+                            NotificationCenter.default.post(name: .didUploadCar, object: nil)
                             dismiss()
                         }
                     }
@@ -84,6 +95,7 @@ struct ListCarView: View {
                 .background(Color.blue)
                 .foregroundColor(.white)
                 .cornerRadius(10)
+
             }
             .padding()
         }
@@ -254,3 +266,9 @@ struct ListCarView_Previews: PreviewProvider {
         ListCarView()
     }
 }
+
+extension Notification.Name {
+    static let didUploadCar = Notification.Name("didUploadCar")
+    static let didDeleteCar = Notification.Name("didDeleteCar")
+}
+

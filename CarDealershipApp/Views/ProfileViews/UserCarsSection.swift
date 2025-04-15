@@ -24,7 +24,7 @@ struct UserCarsSection: View {
                     HStack(spacing: 10) {
                         ForEach(cars, id: \.wrappedId) { car in
                             if let urlString = car.imageURL, let url = URL(string: urlString) {
-                                NavigationLink(destination: CarDetailsView(car: car)) {
+                                NavigationLink(destination: YourCarDetailsView(car: car)) {
                                     AsyncImage(url: url) { phase in
                                         if let image = phase.image {
                                             image.resizable().scaledToFill()
