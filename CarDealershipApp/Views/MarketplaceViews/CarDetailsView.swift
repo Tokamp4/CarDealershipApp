@@ -9,28 +9,27 @@ struct CarDetailsView: View {
     @State private var conversation: ConversationModel?
     @State private var navigateToChat = false
     @State private var isLoadingConversation = false
-    @State private var imageURLs: [String] = [] // Store URLs for images
+    @State private var imageURLs: [String] = []
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // Display the image from Firebase Storage using AsyncImage
                 if !imageURLs.isEmpty {
                     TabView {
                         ForEach(imageURLs, id: \.self) { imageURL in
                             AsyncImage(url: URL(string: imageURL)) { image in
                                 image.resizable()
                                      .scaledToFill()
-                                     .frame(height: 200) // Reduced from 250
-                                     .clipped() // Ensures image is clipped to fit the frame
+                                     .frame(height: 200)
+                                     .clipped()
                             } placeholder: {
-                                ProgressView() // Loading indicator while image is being fetched
+                                ProgressView()
                                     .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                             }
                         }
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                    .frame(height: 200) // Reduced from 250
+                    .frame(height: 200)
                 }
 
                 VStack(alignment: .leading, spacing: 8) {
@@ -63,7 +62,7 @@ struct CarDetailsView: View {
                             .fontWeight(.semibold)
 
                         HStack(spacing: 12) {
-                            Image("profileImage") // Replace with dynamic profile image if needed
+                            Image("profileImage")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
@@ -106,7 +105,6 @@ struct CarDetailsView: View {
                         NavigationLink(
                             destination: Group {
                                 if let convo = conversation {
-                                    // Navigate to ConversationView if conversation exists
                                     ConversationView(
                                         convo: convo,
                                         currentUser: UserModel(
@@ -118,12 +116,12 @@ struct CarDetailsView: View {
                                         isPreview: false
                                     )
                                 } else {
-                                    EmptyView() // Show empty view if no conversation exists
+                                    EmptyView()
                                 }
                             },
                             isActive: $navigateToChat
                         ) {
-                            EmptyView() // Hides the NavigationLink's visual content
+                            EmptyView()
                         }
                         .hidden()
                     }
@@ -138,8 +136,11 @@ struct CarDetailsView: View {
             .padding(.top)
         }
         .onAppear {
+            if let carId = car.id {
+                RecentlyViewedService.addToRecentlyViewed(carId: carId)
+            }
             fetchSeller()
-            fetchCarImages() // Fetch images from Firebase Storage
+            fetchCarImages()
         }
     }
 
@@ -169,12 +170,8 @@ struct CarDetailsView: View {
         }
     }
 
-    // Fetch car images from Firebase Storage (we use the provided Firebase URL directly)
     private func fetchCarImages() {
-        // Add the provided image URL to the imageURLs array
         let carImageURL = "https://firebasestorage.googleapis.com/v0/b/cardealershipapp-eaf6e.firebasestorage.app/o/car_images%2Fcivic.jpg?alt=media&token=17791f5f-1a35-473f-b9a3-74a8b54e9802"
-
-        // Add the URL to the imageURLs array to display it
         imageURLs.append(carImageURL)
     }
 
@@ -233,7 +230,7 @@ struct CarDetailsView_Previews: PreviewProvider {
             model: "Model S",
             manufacturer: "Tesla",
             price: "$750,000",
-            vehicleType: "",
+            vehicleType: "Sedan",
             year: "2022",
             engineType: "Electric",
             condition: "New",

@@ -30,11 +30,11 @@ struct ProfileView: View {
 
                         // About Section
                         
-                        AboutSection(bio: vm.bio ?? "") { newBio in
-                            vm.updateBio(newBio: newBio)
-                        }
+                        //AboutSection(bio: vm.bio ?? "") { newBio in
+                            //vm.updateBio(newBio: newBio)
+                        //}
 
-                            .padding(.horizontal)
+                            //.padding(.horizontal)
 
                         // Your Cars Section
                         
