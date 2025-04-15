@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct ListingsView: View {
@@ -9,52 +8,61 @@ struct ListingsView: View {
     
     var body: some View {
         NavigationView {
-            VStack { 
-                HStack(spacing: 15){
+            VStack(spacing: 12) {
+                
+                // Top bar with action buttons
+                HStack {
+                    Spacer()
+                    
                     NavigationLink(destination: ListCarView()) {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.blue)
-                            .frame(width: 300, height: 30)
-                            .overlay(
-                                HStack {
-                                    Image(systemName: "tag.fill")
-                                        .foregroundStyle(.white)
-                                    Text("Sell")
-                                        .font(.headline)
-                                        .foregroundStyle(.white)
-                                }
-                            )
+                        HStack {
+                            Image(systemName: "tag.fill")
+                            Text("Sell Your Car")
+                                .fontWeight(.semibold)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(14)
+                        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                     }
                     
-//                    Button {
-//                        // Add search logic here
-//                    } label: {
-//                        RoundedRectangle(cornerRadius: 10)
-//                            .fill(Color.blue)
-//                            .frame(width: 170, height: 30)
-//                            .overlay(
-//                                HStack {
-//                                    Image(systemName: "magnifyingglass")
-//                                        .foregroundStyle(.white)
-//                                    Text("Search")
-//                                        .font(.headline)
-//                                        .foregroundStyle(.white)
-//                                }
-//                            )
-//                    }
+                    Spacer()
                 }
                 .padding(.top)
-                
+                .padding(.horizontal)
+
+                // Show loading or grid
                 if viewModel.cars.isEmpty {
                     Spacer()
                     ProgressView("Loading cars...")
+                        .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                        .scaleEffect(1.2)
                     Spacer()
                 } else {
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 20) {
+                            // Original cars
                             ForEach(viewModel.cars) { car in
                                 NavigationLink(destination: CarDetailsView(car: car)) {
                                     CarCardView(car: car)
+                                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                                }
+                            }
+                            
+                            // Duplicate some listings for now
+                            ForEach(viewModel.cars.prefix(4)) { car in
+                                NavigationLink(destination: CarDetailsView(car: car)) {
+                                    CarCardView(car: car)
+                                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                                }
+                            }
+                            
+                            ForEach(viewModel.cars.prefix(4)) { car in
+                                NavigationLink(destination: CarDetailsView(car: car)) {
+                                    CarCardView(car: car)
+                                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
                                 }
                             }
                         }
@@ -62,7 +70,8 @@ struct ListingsView: View {
                     }
                 }
             }
-            .onAppear{
+            .padding(.horizontal)
+            .onAppear {
                 viewModel.startListeningToUser()
             }
             .navigationTitle("Marketplace")
