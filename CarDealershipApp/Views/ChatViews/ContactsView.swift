@@ -16,16 +16,16 @@ struct ContactsView: View {
     var body: some View {
         NavigationStack(path: $navPath) {
             VStack(spacing: 20) {
-                TextField("Search...", text: $search)
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .frame(width: 250, height: 30)
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-                    .padding(.top)
+//                TextField("Search...", text: $search)
+//                    .padding()
+//                    .background(Color.gray.opacity(0.1))
+//                    .frame(width: 250, height: 30)
+//                    .cornerRadius(10)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 10)
+//                            .stroke(Color.gray, lineWidth: 1)
+//                    )
+//                    .padding(.top)
                 
                 ScrollView {
                     if vm.conversations.isEmpty {
@@ -35,7 +35,7 @@ struct ContactsView: View {
                     } else {
                         ForEach(vm.conversations, id: \.id) { convo in
                             Button {
-                                if let currentUser = vm.currentUser {
+                                if vm.currentUser != nil {
                                     navPath.append(convo)
                                 }
                             } label: {

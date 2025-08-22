@@ -78,7 +78,6 @@ final class ProfileViewModel: ObservableObject {
     
     func signOut() {
         AuthService.shared.signOut()
-        UserService.shared.reset()
     }
 
     func uploadProfileImage(image: UIImage) {

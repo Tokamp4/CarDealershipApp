@@ -56,7 +56,7 @@ class ContactsViewModel: ObservableObject {
         Firestore.firestore()
             .collection("conversations")
             .whereField("participants", arrayContains: uid)
-//            .order(by: "lastTimeStamp", descending: true)
+            .order(by: "lastTimestamp", descending: true)
             .addSnapshotListener { [weak self] snapshot, error in
                 if let error = error {
                     print("Error fetching conversations: \(error.localizedDescription)")
