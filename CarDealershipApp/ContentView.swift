@@ -19,6 +19,7 @@ struct ContentView: View {
             } else {
                 NavigationView {
                     AuthMenuView()
+                    var m = 1
                 }
             }
         }
